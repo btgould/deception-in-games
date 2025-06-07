@@ -2,23 +2,41 @@ from zs_game import ZSGame
 
 import numpy as np
 import numpy.typing as npt
-from gurobipy import Model, GRB 
+from gurobipy import Model, GRB
+
+from dataclasses import dataclass
 
 from typing import Tuple
 
 FArray = npt.NDArray[np.float64]
+M = 2  # big-M constant (needs to select against probability weights, anything >= 1 is sufficiently large)
 
-np.random.seed(5)
+@dataclass
+class DeceptiveGame:
+    game: ZSGame
+    dgame: ZSGame
+    worst_case_game: ZSGame
 
-num_rows = 3
-num_cols = 3
-deception_budget = 0.4
-game = ZSGame.random(num_rows, num_cols)
-game = ZSGame(np.array([[0.0, 1, -1], [-1, 0, 1], [1, -1, 0]]))
-dgame = ZSGame.random_disturbance(game, deception_budget)
+    robust_x: FArray
+    robust_y: FArray
 
-chosen_deception = dgame.outcomes - game.outcomes
-assert np.linalg.norm(chosen_deception, ord=1) <= deception_budget
+    security_val: float
+    outcome_val: float
+    full_knowledge_val: float
+
+    def __str__(self):
+        return (
+            f"The defender viewed the (disturbed) game\n{self.dgame.outcomes}\n"
+            f"The induced security game is\n{self.worst_case_game.outcomes}\n\n"
+            f"The defender chose strategy\n{self.robust_y}\n"
+            f"The attacker chose strategy\n{self.robust_x}\n\n"
+            f"The defender's security value is {self.security_val:.3f}\n"
+            f"The outcome of the believed game is {self.worst_case_game.outcome(self.robust_x, self.robust_y):.3f}\n"
+            f"The outcome of the original game is {self.outcome_val:.3f}\n"
+            f"If the defender had full knowledge, the outcome would be {self.full_knowledge_val:.3f}"
+        )
+
+
 
 
 def robust_defender_strategy(
@@ -36,117 +54,97 @@ def robust_defender_strategy(
 
     # Create Gurobi model
     m = Model()
-    m.setParam('OutputFlag', 0)  # silent
+    m.setParam("OutputFlag", 0)  # silent
 
     # Variables: x (num_rows), alpha, beta
     x = m.addVars(num_rows, lb=0, name="x")
     alpha = m.addVar(lb=-GRB.INFINITY, name="alpha")
-    beta = m.addVar(lb=0, name="beta")
+    beta = m.addVar(name="beta")
+    selector = m.addVars(num_rows, vtype=GRB.BINARY, name="selector")
 
     # Objective: minimize alpha + deception_budget * beta
-    m.setObjective(alpha + deception_budget * beta, GRB.MINIMIZE)
+    m.setObjective(alpha - deception_budget * beta, GRB.MINIMIZE)
 
     # Constraints
-    # sum(x) == 1
+    # Enforce attacker probability distribution: sum_i x[i] = 1
     m.addConstr(sum(x[i] for i in range(num_rows)) == 1, "prob_sum")
 
     # For each column j: sum_i x[i] * dgame.outcomes[i, j] <= alpha
     for j in range(num_cols):
         m.addConstr(
             sum(x[i] * dgame.outcomes[i, j] for i in range(num_rows)) <= alpha,
-            f"alpha_col_{j}"
+            f"alpha_col_{j}",
         )
 
     # For each row i: x[i] <= beta
     for i in range(num_rows):
-        m.addConstr(x[i] <= beta, f"beta_row_{i}")
+        m.addConstr(x[i] + M * (1 - selector[i]) >= beta, f"beta_row_{i}")
+
+    # Only one row can be selected
+    m.addConstr(sum(selector[i] for i in range(num_rows)) == 1, "selector_sum")
 
     m.optimize()
 
     # Extract solution
     x_sol = np.array([x[i].X for i in range(num_rows)], dtype=float)
-    alpha_sol = alpha.X
-    beta_sol = beta.X
+
+    gp_comps = x_sol @ dgame.outcomes
+    max_gp_comp = np.max(gp_comps)
+    valid_strats = np.isclose(gp_comps, max_gp_comp, atol=1e-9).astype(float)
+    y_sol = (
+        valid_strats / np.sum(valid_strats)
+    )  # TODO: choosing a uniform distribution here is arbitrary, and may affect the outcome of the true game (but will not affect the security value)
 
     # For dual variables (defender strategy), use shadow prices of alpha constraints
-    robust_y = np.array([-m.getConstrByName(f"alpha_col_{j}").Pi for j in range(num_cols)])
+    # robust_y = np.array(
+    #     [-m.getConstrByName(f"alpha_col_{j}").Pi for j in range(num_cols)]
+    # )
 
-    return m.ObjVal, np.hstack((x_sol, [alpha_sol, beta_sol])), robust_y
-
-
-# Compare to non-robust behavior
-
-robust_val, robust_x, robust_y = robust_defender_strategy(dgame, deception_budget)
-alpha, beta = robust_x[-2:]
-robust_x = robust_x[:-2]  # remove alpha, beta from x
+    return m.ObjVal, x_sol, y_sol
 
 
-# ============================================================
-# Is there a canonical worst deception?
-# ============================================================
+def deception_robust_solve(game: ZSGame, deception_budget: float) -> DeceptiveGame:
+    """
+    Solves the robust defender strategy problem for a given game and deception budget.
+    Args:
+        game: The original game.
+        deception_budget: The budget for deception.
+    Returns:
+        A DeceptiveGame object containing the results.
+    """
+    dgame = ZSGame.random_disturbance(game, deception_budget)
+    robust_val, robust_x, robust_y = robust_defender_strategy(dgame, deception_budget)
 
-outer = np.outer(robust_x, robust_y)
-dnorm = np.linalg.norm(outer, ord=np.inf)
-worst_row = np.argmax(
-    np.sum(outer, axis=1)
-)  # don't need abs here, as x and y are non-negative
-worst_D = np.zeros_like(
-    game.outcomes
-)  
-worst_D[worst_row, :] = (
-    deception_budget  # don't need sign check here, as x and y are non-negative
-)
-worst_game = dgame.from_disturbance(-worst_D)
+    # Compute the worst-case game
+    outer = np.outer(robust_x, robust_y)
+    worst_row = np.argmax(
+        np.sum(outer, axis=1)
+    )  # don't need abs here, as x and y are non-negative
+    worst_D = np.zeros_like(game.outcomes)
+    worst_D[worst_row, :] = (
+        deception_budget  # don't need sign check here, as x and y are non-negative
+    )
+    worst_case_game = dgame.from_disturbance(-worst_D)
 
-gp_comps = robust_x @ dgame.outcomes
-max_gp_comp = np.max(gp_comps)
-valid_strats = np.isclose(gp_comps, max_gp_comp, atol=1e-9).astype(float)
-unif_y = valid_strats / np.sum(valid_strats)
-single_y = np.zeros(num_cols)
-single_y[np.argmax(gp_comps)] = 1
+    outcome_val = game.outcome(robust_x, robust_y)
+    full_knowledge_val = game.solve()[0]
 
-worst_val, worst_x, worst_y = worst_game.solve()
-# print(f"{deceptive_val=}\n{worst_val=}")
-# print(f"{worst_x=}\n{x=}")
-# print(f"{worst_y=}\n{y=}")
-
-outcome_val = game.outcome(robust_x, robust_y)
-full_knowledge_val = game.solve()[0]
-
-
-# print(f"{worst_game.outcomes=}")
-# print(f"{dgame.outcomes=}")
-# print(f"{worst_val=}")
-# print(f"{robust_val=}")
-# print(f"{full_knowledge_val=}")
-
-# assert robust_val <= full_knowledge_val
-
-# print(np.linalg.norm(dgame.outcomes - game.outcomes, ord=1))
-
-# print(f"{deceptive_val=}\n{outcome_val=}\n{full_knowledge_val=}")
+    return DeceptiveGame(
+        game=game,
+        dgame=dgame,
+        worst_case_game=worst_case_game,
+        robust_x=robust_x,
+        robust_y=robust_y,
+        security_val=robust_val,
+        outcome_val=outcome_val.item(),
+        full_knowledge_val=full_knowledge_val,
+    )
 
 
-# ============================================================
-# Display results
-# ============================================================
+if __name__ == "__main__":
+    np.random.seed(5)
+    deception_budget = 2
+    game = ZSGame(np.array([[0.0, 1, -1], [-1, 0, 1], [1, -1, 0]]))
 
-print(f"The defender viewed the (disturbed) game\n{dgame.outcomes}")
-print(
-    f"The calculated worst-case deception is\n{worst_D},\nwhich implicitly induces the believed game\n{worst_game.outcomes}\n"
-)
-
-print(
-    f"The defender chose strategy\n{robust_y} (dual)\n{unif_y} (uniform)\n{single_y} (single)"
-)
-print(f"The attacker chose strategy\n{robust_x}\n")
-
-print(f"The LP solver predicts a value of {robust_val:.3f} for the defender.")
-print(
-    f"The outcome of the believed game is\n{worst_game.outcome(robust_x, robust_y):.3f} (dual)\n{worst_game.outcome(robust_x, unif_y):.3f} (uniform)\n{worst_game.outcome(robust_x, single_y):.3f} (single)"
-)
-
-print(f"{alpha=}, {beta=} => {alpha + deception_budget * beta=}")
-print(f"Manually calculated: {robust_x @ dgame.outcomes=}")
-print(f"Manually calculated: {dgame.outcome(robust_x, robust_y)=}")
-print(f"Manually calculated: {robust_x @ worst_D @ unif_y=}")
+    deceptive_game = deception_robust_solve(game, deception_budget)
+    print(deceptive_game)
