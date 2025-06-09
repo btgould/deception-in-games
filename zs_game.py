@@ -66,7 +66,7 @@ class ZSGame:
 
         return c, A_ub, b_ub, A_eq, b_eq
 
-    def solve(self) -> Tuple[FArray, FArray, FArray]:
+    def solve(self) -> Tuple[float, FArray, FArray]:
         """
         Solves a zero-sum game between 2 players with the minimax theorem.
         Returns:

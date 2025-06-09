@@ -11,6 +11,7 @@ from typing import Tuple
 FArray = npt.NDArray[np.float64]
 M = 2  # big-M constant (needs to select against probability weights, anything >= 1 is sufficiently large)
 
+
 @dataclass
 class DeceptiveGame:
     game: ZSGame
@@ -35,8 +36,6 @@ class DeceptiveGame:
             f"The outcome of the original game is {self.outcome_val:.3f}\n"
             f"If the defender had full knowledge, the outcome would be {self.full_knowledge_val:.3f}"
         )
-
-
 
 
 def robust_defender_strategy(
