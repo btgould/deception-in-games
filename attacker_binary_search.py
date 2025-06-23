@@ -14,6 +14,7 @@ class DeceptionResult:
     game: ZSGame
     chosen_deception: FArray
     defender_strategy: FArray
+    honest_value: float
     suboptimality_gap: float
     obtained_value: float
 
@@ -34,7 +35,6 @@ def attacker_binary_search(
 
     min_val = np.min(game.outcomes) - deception_budget
     max_val = np.max(game.outcomes) + deception_budget
-    num = int((max_val - min_val) / dv) + 1
 
     D_sol = np.empty_like(game.outcomes)
     y_sol = np.empty(num_cols, dtype=float)
@@ -42,6 +42,7 @@ def attacker_binary_search(
         game=game,
         chosen_deception=D_sol,
         defender_strategy=y_sol,
+        honest_value=np.inf,
         suboptimality_gap=np.inf,
         obtained_value=np.inf,
     )
@@ -49,12 +50,10 @@ def attacker_binary_search(
     for row in range(num_rows):
         low = min_val
         high = max_val
-        best_row_dr = None
+        row_dr = None
+        v_step = (low + high) / 2
 
         while high - low > dv:
-            v_step = (low + high) / 2
-            # print(f"Computing for {row=} with {v_step=}")
-
             m = Model()
             m.setParam("OutputFlag", 0)  # silent
 
@@ -82,38 +81,31 @@ def attacker_binary_search(
             if m.status == GRB.OPTIMAL:
                 low = v_step
 
-                if high - low <= dv:
-                    y_sol = np.array([y[j].X for j in range(num_cols)], dtype=float)
-                    d_sol = np.array([d[i].X for i in range(num_rows)], dtype=float)
-                    D_sol = np.repeat(d_sol[:, np.newaxis], num_cols, axis=1)
-
-                    dgame = game.from_disturbance(D_sol)
-                    suboptimality_gap = dgame.solve()[0] - v_step
-                    achieved_value = np.min(game.outcomes @ y_sol)
-
-                    best_row_dr = DeceptionResult(
-                        game=game,
-                        chosen_deception=D_sol,
-                        defender_strategy=y_sol,
-                        suboptimality_gap=suboptimality_gap,
-                        obtained_value=achieved_value,
-                    )
+                y_sol = np.array([y[j].X for j in range(num_cols)], dtype=float)
+                d_sol = np.array([d[i].X for i in range(num_rows)], dtype=float)
+                D_sol = np.repeat(d_sol[:, np.newaxis], num_cols, axis=1)
             else:
                 high = v_step
 
-        # print(best_row_dr)
+            v_step = (low + high) / 2
 
-        if best_row_dr and (best_row_dr.obtained_value <= best_dr.obtained_value):
-            best_dr = best_row_dr
+        honest_value = game.solve()[0]
+        suboptimality_gap = honest_value - v_step
+        achieved_value = np.min(game.outcomes @ y_sol)
+
+        row_dr = DeceptionResult(
+            game=game,
+            chosen_deception=D_sol,
+            defender_strategy=y_sol,
+            honest_value=honest_value,
+            suboptimality_gap=suboptimality_gap,
+            obtained_value=achieved_value,
+        )
+
+        if row_dr and (row_dr.obtained_value <= best_dr.obtained_value):
+            best_dr = row_dr
 
     return best_dr
 
 
 # TODO: robust LP bound objective by dv parameter variation
-
-if __name__ == "__main__":
-    game = ZSGame(np.array([[0.0, 1, -1], [-1, 0, 1], [1, -1, 0]]))
-    deception_budget = 2.0
-    dv = 0.01
-    dr = attacker_binary_search(game, deception_budget, dv)
-    assert dr.suboptimality_gap < dv, "Suboptimality gap is too large"
