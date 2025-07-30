@@ -1,26 +1,19 @@
 from zs_game import ZSGame
+from deception import DeceptionResult
 
 import numpy as np
 import numpy.typing as npt
-from gurobipy import Model, GRB
 
-from dataclasses import dataclass
+import gurobipy as gp
+from gurobipy import Model, GRB
 
 FArray = npt.NDArray[np.float64]
 
-
-@dataclass
-class DeceptionResult:
-    game: ZSGame
-    chosen_deception: FArray
-    defender_strategy: FArray
-    honest_value: float
-    suboptimality_gap: float
-    obtained_value: float
+DV: float = 0.01
 
 
-def attacker_binary_search(
-    game: ZSGame, deception_budget: float, dv: float = 0.01
+def deception_binary_search(
+    game: ZSGame, deception_budget: float, dv: float = DV
 ) -> DeceptionResult:
     """
     Computes the optimal deception strategy for the attacker using binary search.
@@ -37,13 +30,14 @@ def attacker_binary_search(
     max_val = np.max(game.outcomes) + deception_budget
 
     D_sol = np.empty_like(game.outcomes)
+    x_sol = np.empty(num_rows, dtype=float)
     y_sol = np.empty(num_cols, dtype=float)
     best_dr = DeceptionResult(
         game=game,
-        chosen_deception=D_sol,
-        defender_strategy=y_sol,
+        deceiver_strategy=x_sol,
+        deception=D_sol,
+        victim_strategy=y_sol,
         honest_value=np.inf,
-        suboptimality_gap=np.inf,
         obtained_value=np.inf,
     )
 
@@ -65,16 +59,16 @@ def attacker_binary_search(
                 sum(game.outcomes[row, j] * y[j] for j in range(num_cols)), GRB.MINIMIZE
             )
 
-            for i in range(num_rows):
-                m.addConstr(
-                    sum(game.outcomes[i, j] * y[j] for j in range(num_cols)) + d[i]
-                    >= v_step
-                )
-                m.addConstr(d[i] <= t[i])
-                m.addConstr(-d[i] <= t[i])
+            m.addConstrs(
+                sum(game.outcomes[i, j] * y[j] for j in range(num_cols)) + d[i]
+                >= v_step
+                for i in range(num_rows)
+            )
+            m.addConstrs(d[i] <= t[i] for i in range(num_rows))
+            m.addConstrs(-d[i] <= t[i] for i in range(num_rows))
 
-            m.addConstr(sum(y[i] for i in range(num_cols)) == 1)
-            m.addConstr(sum(t[i] for i in range(num_rows)) <= deception_budget)
+            m.addConstr(gp.quicksum(y[i] for i in range(num_cols)) == 1)
+            m.addConstr(gp.quicksum(t[i] for i in range(num_rows)) <= deception_budget)
 
             m.optimize()
 
@@ -90,15 +84,14 @@ def attacker_binary_search(
             v_step = (low + high) / 2
 
         honest_value = game.solve()[0]
-        suboptimality_gap = honest_value - v_step
         achieved_value = np.min(game.outcomes @ y_sol)
 
         row_dr = DeceptionResult(
             game=game,
-            chosen_deception=D_sol,
-            defender_strategy=y_sol,
+            deceiver_strategy=np.eye(1, num_rows, row),
+            deception=D_sol,
+            victim_strategy=y_sol,
             honest_value=honest_value,
-            suboptimality_gap=suboptimality_gap,
             obtained_value=achieved_value,
         )
 
@@ -108,4 +101,16 @@ def attacker_binary_search(
     return best_dr
 
 
-# TODO: robust LP bound objective by dv parameter variation
+# NOTE: this does not robust LP bound objective by dv parameter variation
+
+
+def verify_deception_result(dr: DeceptionResult) -> bool:
+    """
+    Performs sanity checks on the deception result
+    Args:
+        dr: The DeceptionResult to verify.
+    Returns:
+        True if the result is valid, False otherwise.
+    """
+    # FIXME: actually implement sanity checks
+    return True

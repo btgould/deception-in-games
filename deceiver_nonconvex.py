@@ -1,30 +1,17 @@
 from zs_game import ZSGame
+from deception import DeceptionResult
 
 import numpy as np
 import numpy.typing as npt
-import pandas as pd
 
 import gurobipy as gp
 from gurobipy import Model, GRB
 
-import matplotlib.pyplot as plt
-
-from dataclasses import dataclass, asdict
 
 FArray = npt.NDArray[np.float64]
 
 
-@dataclass
-class DeceptionResult:
-    game: ZSGame
-    deceiver_strategy: FArray
-    deception: FArray
-    victim_strategy: FArray
-    honest_value: float
-    obtained_value: float
-
-
-def attacker_nonconvex(game: ZSGame, deception_budget: float) -> DeceptionResult:
+def deception_nonconvex(game: ZSGame, deception_budget: float) -> DeceptionResult:
     """
     Computes the optimal deception strategy for the attacker by solving a non-convex program.
     Args:
@@ -148,80 +135,3 @@ def attacker_nonconvex(game: ZSGame, deception_budget: float) -> DeceptionResult
     )
 
     return best_dr
-
-
-def _is_victim_rational(dr: DeceptionResult) -> bool:
-    dgame = dr.game.from_disturbance(dr.deception)
-    rational_sv = dgame.solve()[0]
-    computed_sv = np.min(dgame.outcomes @ dr.victim_strategy)
-
-    return np.allclose(rational_sv, computed_sv, atol=1e-4)
-
-
-def _does_deceiver_benefit(dr: DeceptionResult):
-    return dr.honest_value > dr.obtained_value or np.allclose(
-        dr.honest_value, dr.obtained_value
-    )
-
-
-def verify_deception_result(dr: DeceptionResult) -> bool:
-    """
-    Performs various sanity checks on the computed deception.
-
-    Args:
-        dr: The DeceptionResult to verify.
-    Returns:
-        True if the deception result is valid, False otherwise.
-    """
-    verified: bool = True
-    verified &= _is_victim_rational(dr)
-    verified &= _does_deceiver_benefit(dr)
-    return verified
-
-
-if __name__ == "__main__":
-    NUM_GAMES = 5
-    NUM_ROWS = 5
-    NUM_COLS = 5
-    SANITY_CHECK = False
-
-    rng = np.random.default_rng(42)
-    games = rng.uniform(low=-5, high=5, size=(NUM_GAMES, NUM_ROWS, NUM_COLS))
-
-    deception_budgets = [1, 2, 3]
-    results = []
-
-    for deception_budget in deception_budgets:
-        for i, game in enumerate(games):
-            dr = attacker_nonconvex(ZSGame(game), deception_budget)
-            result = asdict(dr)
-            result["deception_budget"] = deception_budget
-            result["game_idx"] = i
-            results.append(result)
-
-            if SANITY_CHECK:
-                assert verify_deception_result(dr), f"Sanity check failed for:\n{dr}"
-
-    df = pd.DataFrame(results)
-    improvements = df["honest_value"] - df["obtained_value"]
-    improvements_by_budget = [
-        improvements[df["deception_budget"] == db] for db in deception_budgets
-    ]
-    means = [imp.mean() for imp in improvements_by_budget]
-    stds = [imp.std() for imp in improvements_by_budget]
-
-    plt.figure()
-    plt.plot(deception_budgets, means, marker="o", label="Mean improvement")
-    plt.fill_between(
-        deception_budgets,
-        [m - s for m, s in zip(means, stds)],
-        [m + s for m, s in zip(means, stds)],
-        color="b",
-        alpha=0.2,
-        label="Std deviation",
-    )
-    plt.xlabel("Deception budget")
-    plt.ylabel("Improvement")
-    plt.title("Improvement vs Deception Budget")
-    plt.legend()
-    plt.show()
