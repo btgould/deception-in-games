@@ -56,11 +56,12 @@ def deception_binary_search(
             t = m.addVars(num_rows, name="t")
 
             m.setObjective(
-                sum(game.outcomes[row, j] * y[j] for j in range(num_cols)), GRB.MINIMIZE
+                gp.quicksum(game.outcomes[row, j] * y[j] for j in range(num_cols)),
+                GRB.MINIMIZE,
             )
 
             m.addConstrs(
-                sum(game.outcomes[i, j] * y[j] for j in range(num_cols)) + d[i]
+                gp.quicksum(game.outcomes[i, j] * y[j] for j in range(num_cols)) + d[i]
                 >= v_step
                 for i in range(num_rows)
             )
@@ -104,13 +105,3 @@ def deception_binary_search(
 # NOTE: this does not robust LP bound objective by dv parameter variation
 
 
-def verify_deception_result(dr: DeceptionResult) -> bool:
-    """
-    Performs sanity checks on the deception result
-    Args:
-        dr: The DeceptionResult to verify.
-    Returns:
-        True if the result is valid, False otherwise.
-    """
-    # FIXME: actually implement sanity checks
-    return True
