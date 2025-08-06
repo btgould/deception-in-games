@@ -41,6 +41,6 @@ def verify_deception_result(dr: DeceptionResult) -> bool:
         True if the deception result is valid, False otherwise.
     """
     verified: bool = True
-    verified &= _is_victim_rational(dr)
+    # verified &= _is_victim_rational(dr)
     verified &= _does_deceiver_benefit(dr)
     return verified

@@ -12,6 +12,50 @@ FArray = npt.NDArray[np.float64]
 DV: float = 0.01
 
 
+def _tolerance_bound(
+    dr: DeceptionResult, subrationaltiy_level: float
+) -> DeceptionResult:
+    """
+    Accounts for the possible error induced by numerical tolerances in the binary search procedure on the victim's rationality level.
+
+    Args:
+        dr: A DeceptionResult output by the binary search procedure
+        subrationaltiy_level: victim's subrationality level
+
+    Returns:
+        A DeceptionResult with the deceiver worst-case victim strategy realized (subject to rationality constraints)
+    """
+
+    num_rows, num_cols = dr.game.outcomes.shape
+
+    m = Model()
+    m.setParam("OutputFlag", 0)  # silent
+
+    y = m.addVars(num_cols, name="y")
+
+    m.addConstr(gp.quicksum(y[i] for i in range(num_cols)) == 1)
+    m.addConstrs(
+        gp.quicksum(
+            (dr.game.outcomes + dr.deception)[i, j] * y[j] for j in range(num_cols)
+        )
+        >= subrationaltiy_level
+        for i in range(num_rows)
+    )
+
+    c = dr.deceiver_strategy @ dr.game.outcomes
+    m.setObjective(
+        gp.quicksum(c[j] * y[j] for j in range(num_cols)),
+        GRB.MAXIMIZE,
+    )
+
+    m.optimize()
+
+    dr.victim_strategy = np.array([y[j].X for j in range(num_cols)], dtype=float)
+    dr.obtained_value = m.ObjVal
+
+    return dr
+
+
 def deception_binary_search(
     game: ZSGame, deception_budget: float, dv: float = DV
 ) -> DeceptionResult:
@@ -28,6 +72,8 @@ def deception_binary_search(
 
     min_val = np.min(game.outcomes) - deception_budget
     max_val = np.max(game.outcomes) + deception_budget
+    best_v_step = min_val
+    v_sol = min_val
 
     D_sol = np.empty_like(game.outcomes)
     x_sol = np.empty(num_rows, dtype=float)
@@ -45,9 +91,9 @@ def deception_binary_search(
         low = min_val
         high = max_val
         row_dr = None
-        v_step = (low + high) / 2
 
         while high - low > dv:
+            v_step = (low + high) / 2
             m = Model()
             m.setParam("OutputFlag", 0)  # silent
 
@@ -79,17 +125,18 @@ def deception_binary_search(
                 y_sol = np.array([y[j].X for j in range(num_cols)], dtype=float)
                 d_sol = np.array([d[i].X for i in range(num_rows)], dtype=float)
                 D_sol = np.repeat(d_sol[:, np.newaxis], num_cols, axis=1)
+                v_sol = v_step
             else:
                 high = v_step
 
-            v_step = (low + high) / 2
-
         honest_value = game.solve()[0]
         achieved_value = np.min(game.outcomes @ y_sol)
+        decever_strategy = np.zeros(num_rows, dtype=float)
+        decever_strategy[row] = 1.0
 
         row_dr = DeceptionResult(
             game=game,
-            deceiver_strategy=np.eye(1, num_rows, row),
+            deceiver_strategy=decever_strategy,
             deception=D_sol,
             victim_strategy=y_sol,
             honest_value=honest_value,
@@ -98,10 +145,10 @@ def deception_binary_search(
 
         if row_dr and (row_dr.obtained_value <= best_dr.obtained_value):
             best_dr = row_dr
+            best_v_step = v_sol 
 
+    best_dr = _tolerance_bound(best_dr, best_v_step)
     return best_dr
 
 
 # NOTE: this does not robust LP bound objective by dv parameter variation
-
-
