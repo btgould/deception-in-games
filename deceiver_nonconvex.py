@@ -11,7 +11,9 @@ from gurobipy import Model, GRB
 FArray = npt.NDArray[np.float64]
 
 
-def deception_nonconvex(game: ZSGame, deception_budget: float, time_limit: float = 60) -> DeceptionResult:
+def deception_nonconvex(
+    game: ZSGame, deception_budget: float, time_limit: float = 60
+) -> DeceptionResult:
     """
     Computes the optimal deception strategy for the attacker by solving a non-convex program.
     Args:
@@ -38,7 +40,7 @@ def deception_nonconvex(game: ZSGame, deception_budget: float, time_limit: float
     m = Model()
     m.setParam("OutputFlag", 0)  # silent
     m.setParam("MIPGap", 0.01)
-    m.setParam("TimeLimit", 60)
+    m.setParam("TimeLimit", time_limit)
     m.setParam("NonConvex", 2)  # Enable non-convex QCP
 
     # Decision variables

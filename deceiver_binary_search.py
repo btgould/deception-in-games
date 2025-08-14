@@ -9,7 +9,7 @@ from gurobipy import Model, GRB
 
 FArray = npt.NDArray[np.float64]
 
-DV: float = 1e-6
+DV: float = 1e-3
 
 
 def _tolerance_bound(

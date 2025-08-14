@@ -128,7 +128,7 @@ def compare_deceptive_strategies():
     print(df_bin_search_no_robust["computation_time"].describe())
 
     # Plotting improvements
-    plt.figure()
+    plt.figure(figsize=(8, 6))
 
     plt.plot(
         deception_budgets,
@@ -161,7 +161,7 @@ def compare_deceptive_strategies():
         deception_budgets,
         improvement_mean_by_budget_bin,
         marker="o",
-        label="Binary Search",
+        label="Binary Search (Robust)",
         color="blue",
     )
     plt.fill_between(
@@ -186,7 +186,7 @@ def compare_deceptive_strategies():
         deception_budgets,
         improvement_mean_by_budget_bin_no_robust,
         marker="^",
-        label="Binary Search (robustify=False)",
+        label="Binary Search (Non-Robust)",
         color="green",
     )
     plt.fill_between(
@@ -238,28 +238,30 @@ def computation_time_by_size():
         times_binsearch.append(np.mean(t_bin))
 
         # Nonconvex
-        if n < 8: # Too slow for large games, skip for demonstration purposes
+        if n < 8:  # Too slow for large games, skip for demonstration purposes
             t_non = []
             for game in games:
                 t0 = time.time()
-                deception_nonconvex(ZSGame(game), deception_budget, time_limit=300) # cutoff after 5 min
+                deception_nonconvex(
+                    ZSGame(game), deception_budget, time_limit=300
+                )  # cutoff after 5 min
                 t1 = time.time()
                 t_non.append(t1 - t0)
             times_nonconvex.append(np.mean(t_non))
-        else: 
+        else:
             times_nonconvex.append(np.nan)
 
-    plt.figure()
+    plt.figure(figsize=(8, 6))
     plt.plot(
         sizes,
         times_binsearch,
         marker="o",
-        label="Binary Search (robustified)",
+        label="Binary Search (Robust)",
         color="blue",
     )
     plt.plot(sizes, times_nonconvex, marker="s", label="Nonconvex", color="red")
     plt.yscale("log")
-    plt.xlabel("Game size (n x n)")
+    plt.xlabel("Game size ($n \\times n$)")
     plt.ylabel("Mean Computation Time (s, log scale)")
     plt.title("Computation Time vs Game Size")
     plt.legend()
@@ -267,5 +269,60 @@ def computation_time_by_size():
     plt.show()
 
 
-# compare_deceptive_strategies()
+def binsearch_tol_comparison():
+    num_games = 100
+    num_rows = 5
+    num_cols = 5
+    deception_budget = 3.0
+    rng = np.random.default_rng(42)
+
+    # Logarithmically spaced tolerances
+    tolerances = np.logspace(-1, -6, 10)
+    improvements_robust = []
+    improvements_nonrobust = []
+
+    # Sample games once for all tolerances
+    games = rng.uniform(low=-5, high=5, size=(num_games, num_rows, num_cols))
+
+    for tol in tolerances:
+        # Robustified
+        imp_robust = []
+        imp_nonrobust = []
+        for game in games:
+            zs = ZSGame(game)
+            dr_robust = deception_binary_search(
+                zs, deception_budget, dv=tol, robustify=True
+            )
+            dr_nonrobust = deception_binary_search(
+                zs, deception_budget, dv=tol, robustify=False
+            )
+            imp_robust.append(dr_robust.honest_value - dr_robust.obtained_value)
+            imp_nonrobust.append(
+                dr_nonrobust.honest_value - dr_nonrobust.obtained_value
+            )
+        improvements_robust.append(np.mean(imp_robust))
+        improvements_nonrobust.append(np.mean(imp_nonrobust))
+
+    plt.figure(figsize=(8, 6))
+    plt.plot(
+        tolerances, improvements_robust, marker="o", label="Robustified", color="blue"
+    )
+    plt.plot(
+        tolerances,
+        improvements_nonrobust,
+        marker="s",
+        label="Non-robustified",
+        color="red",
+    )
+    plt.xscale("log")
+    plt.xlabel("Binary Search Tolerance")
+    plt.ylabel("Mean Improvement")
+    plt.title("Improvement vs Binary Search Tolerance")
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+
+compare_deceptive_strategies()
 computation_time_by_size()
+binsearch_tol_comparison()
