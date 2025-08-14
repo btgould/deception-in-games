@@ -27,9 +27,11 @@ def sample_deceptions(
     num_cols: int,
     deception_budgets: Iterable[float],
     method: Callable,
+    games=None,
     rng=np.random.default_rng(42),
 ):
-    games = rng.uniform(low=-5, high=5, size=(num_games, num_rows, num_cols))
+    if games is None:
+        games = rng.uniform(low=-5, high=5, size=(num_games, num_rows, num_cols))
     results = []
 
     for deception_budget in deception_budgets:
@@ -52,21 +54,38 @@ def sample_deceptions(
 
 def compare_deceptive_strategies():
     deception_budgets = np.linspace(1, 6, 5)
-    df_bin_search = sample_deceptions(
-        NUM_GAMES, NUM_ROWS, NUM_COLS, deception_budgets, deception_binary_search
-    )
+    rng = np.random.default_rng(42)
+    games = rng.uniform(low=-5, high=5, size=(NUM_GAMES, NUM_ROWS, NUM_COLS))
+
     df_nonconvex = sample_deceptions(
-        NUM_GAMES, NUM_ROWS, NUM_COLS, deception_budgets, deception_nonconvex
+        NUM_GAMES,
+        NUM_ROWS,
+        NUM_COLS,
+        deception_budgets,
+        deception_nonconvex,
+        games=games,
+    )
+    df_bin_search = sample_deceptions(
+        NUM_GAMES,
+        NUM_ROWS,
+        NUM_COLS,
+        deception_budgets,
+        deception_binary_search,
+        games=games,
     )
 
-    # Calculate summary statistics for binary search
-    improvements_bin = df_bin_search["honest_value"] - df_bin_search["obtained_value"]
-    improvement_mean_by_budget_bin = improvements_bin.groupby(
-        df_bin_search["deception_budget"]
-    ).mean()
-    improvement_std_by_budget_bin = improvements_bin.groupby(
-        df_bin_search["deception_budget"]
-    ).std()
+    # New method: binary search with robustify=False
+    def deception_binary_search_no_robust(game, budget):
+        return deception_binary_search(game, budget, robustify=False)
+
+    df_bin_search_no_robust = sample_deceptions(
+        NUM_GAMES,
+        NUM_ROWS,
+        NUM_COLS,
+        deception_budgets,
+        deception_binary_search_no_robust,
+        games=games,
+    )
 
     # Calculate summary statistics for nonconvex
     improvements_nonconvex = (
@@ -79,17 +98,68 @@ def compare_deceptive_strategies():
         df_nonconvex["deception_budget"]
     ).std()
 
+    # Calculate summary statistics for binary search
+    improvements_bin = df_bin_search["honest_value"] - df_bin_search["obtained_value"]
+    improvement_mean_by_budget_bin = improvements_bin.groupby(
+        df_bin_search["deception_budget"]
+    ).mean()
+    improvement_std_by_budget_bin = improvements_bin.groupby(
+        df_bin_search["deception_budget"]
+    ).std()
+
+    # Calculate summary statistics for binary search (robustify=False)
+    improvements_bin_no_robust = (
+        df_bin_search_no_robust["honest_value"]
+        - df_bin_search_no_robust["obtained_value"]
+    )
+    improvement_mean_by_budget_bin_no_robust = improvements_bin_no_robust.groupby(
+        df_bin_search_no_robust["deception_budget"]
+    ).mean()
+    improvement_std_by_budget_bin_no_robust = improvements_bin_no_robust.groupby(
+        df_bin_search_no_robust["deception_budget"]
+    ).std()
+
     # Report statistics
     print("=" * 60)
     print("Comparing deception methods over a range of budgets...")
     print("=" * 60)
-    print("Binary Search - Computation time statistics:")
-    print(df_bin_search["computation_time"].describe())
     print("\nNonconvex - Computation time statistics:")
     print(df_nonconvex["computation_time"].describe())
+    print("Binary Search - Computation time statistics:")
+    print(df_bin_search["computation_time"].describe())
+    print("\nBinary Search (robustify=False) - Computation time statistics:")
+    print(df_bin_search_no_robust["computation_time"].describe())
 
-    # Plotting
+    # Plotting improvements
     plt.figure()
+
+    plt.plot(
+        deception_budgets,
+        improvement_mean_by_budget_nonconvex,
+        marker="s",
+        label="Nonconvex",
+        color="red",
+    )
+    plt.fill_between(
+        deception_budgets,
+        [
+            m - s
+            for m, s in zip(
+                improvement_mean_by_budget_nonconvex,
+                improvement_std_by_budget_nonconvex,
+            )
+        ],
+        [
+            m + s
+            for m, s in zip(
+                improvement_mean_by_budget_nonconvex,
+                improvement_std_by_budget_nonconvex,
+            )
+        ],
+        color="red",
+        alpha=0.2,
+    )
+
     plt.plot(
         deception_budgets,
         improvement_mean_by_budget_bin,
@@ -117,28 +187,28 @@ def compare_deceptive_strategies():
 
     plt.plot(
         deception_budgets,
-        improvement_mean_by_budget_nonconvex,
-        marker="s",
-        label="Nonconvex",
-        color="red",
+        improvement_mean_by_budget_bin_no_robust,
+        marker="^",
+        label="Binary Search (robustify=False)",
+        color="green",
     )
     plt.fill_between(
         deception_budgets,
         [
             m - s
             for m, s in zip(
-                improvement_mean_by_budget_nonconvex,
-                improvement_std_by_budget_nonconvex,
+                improvement_mean_by_budget_bin_no_robust,
+                improvement_std_by_budget_bin_no_robust,
             )
         ],
         [
             m + s
             for m, s in zip(
-                improvement_mean_by_budget_nonconvex,
-                improvement_std_by_budget_nonconvex,
+                improvement_mean_by_budget_bin_no_robust,
+                improvement_std_by_budget_bin_no_robust,
             )
         ],
-        color="red",
+        color="green",
         alpha=0.2,
     )
 

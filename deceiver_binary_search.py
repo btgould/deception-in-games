@@ -57,7 +57,7 @@ def _tolerance_bound(
 
 
 def deception_binary_search(
-    game: ZSGame, deception_budget: float, dv: float = DV, robustifty: bool = True
+    game: ZSGame, deception_budget: float, dv: float = DV, robustify: bool = True
 ) -> DeceptionResult:
     """
     Computes the optimal deception strategy for the attacker using binary search.
@@ -152,7 +152,7 @@ def deception_binary_search(
             best_dr = row_dr
             best_v_step = v_sol
 
-    if robustifty:
+    if robustify:
         best_dr = _tolerance_bound(best_dr, best_v_step)
 
     return best_dr
