@@ -1,14 +1,11 @@
 from zs_game import ZSGame
 from deception import verify_deception_result
-
 from deceiver_nonconvex import deception_nonconvex
 from deceiver_binary_search import deception_binary_search
-
 import numpy as np
 from dataclasses import asdict
 import time
 from typing import Callable, Iterable
-
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -219,4 +216,56 @@ def compare_deceptive_strategies():
     plt.show()
 
 
-compare_deceptive_strategies()
+def computation_time_by_size():
+    sizes = list(range(2, 16))  # 2x2 through 15x15
+    num_games = 10  # Number of games per size for averaging
+    deception_budget = 3.0  # Use a fixed budget for all
+    rng = np.random.default_rng(123)
+
+    times_binsearch = []
+    times_nonconvex = []
+
+    for n in sizes:
+        print(f"Running games of size {n}x{n}...")
+        games = rng.uniform(low=-5, high=5, size=(num_games, n, n))
+        # Binsearch (robustified)
+        t_bin = []
+        for game in games:
+            t0 = time.time()
+            deception_binary_search(ZSGame(game), deception_budget)
+            t1 = time.time()
+            t_bin.append(t1 - t0)
+        times_binsearch.append(np.mean(t_bin))
+
+        # Nonconvex
+        if n < 8: # Too slow for large games, skip for demonstration purposes
+            t_non = []
+            for game in games:
+                t0 = time.time()
+                deception_nonconvex(ZSGame(game), deception_budget, time_limit=300) # cutoff after 5 min
+                t1 = time.time()
+                t_non.append(t1 - t0)
+            times_nonconvex.append(np.mean(t_non))
+        else: 
+            times_nonconvex.append(np.nan)
+
+    plt.figure()
+    plt.plot(
+        sizes,
+        times_binsearch,
+        marker="o",
+        label="Binary Search (robustified)",
+        color="blue",
+    )
+    plt.plot(sizes, times_nonconvex, marker="s", label="Nonconvex", color="red")
+    plt.yscale("log")
+    plt.xlabel("Game size (n x n)")
+    plt.ylabel("Mean Computation Time (s, log scale)")
+    plt.title("Computation Time vs Game Size")
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+
+# compare_deceptive_strategies()
+computation_time_by_size()
