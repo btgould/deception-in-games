@@ -1,8 +1,5 @@
-from typing import Tuple
-
 import numpy as np
 import numpy.typing as npt
-
 from scipy.optimize import linprog
 
 FArray = npt.NDArray[np.float64]
@@ -41,7 +38,7 @@ class ZSGame:
         instance = cls(np.random.uniform(low=-5, high=5, size=(num_rows, num_cols)))
         return instance
 
-    def to_linprog(self) -> Tuple[FArray, FArray, FArray, FArray, FArray]:
+    def to_linprog(self) -> tuple[FArray, FArray, FArray, FArray, FArray]:
         """
         Converts the game to a linear program format.
         Returns:
@@ -66,14 +63,14 @@ class ZSGame:
 
         return c, A_ub, b_ub, A_eq, b_eq
 
-    def solve(self) -> Tuple[float, FArray, FArray]:
+    def solve(self) -> tuple[float, FArray, FArray]:
         """
         Solves a zero-sum game between 2 players with the minimax theorem.
         Returns:
             Tuple of (value of game, row player's strategy, column player's strategy).
         """
 
-        n_rows, n_cols = self.outcomes.shape
+        n_rows, _ = self.outcomes.shape
 
         c, A_ub, b_ub, A_eq, b_eq = self.to_linprog()
         result = linprog(c, A_ub=A_ub, b_ub=b_ub, A_eq=A_eq, b_eq=b_eq)
@@ -86,7 +83,7 @@ class ZSGame:
             ]  # Dual problem gives row strategy, write it out to see
             return value, row_strategy, col_strategy
         else:
-            raise Exception("LP failed to solve: " + result.message)
+            raise ValueError("LP failed to solve: " + result.message)
 
     def outcome(self, row_action: FArray, col_action: FArray) -> FArray:
         """

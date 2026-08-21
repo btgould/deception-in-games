@@ -1,13 +1,15 @@
-from zs_game import ZSGame
-from deception import verify_deception_result
-from deceiver_nonconvex import deception_nonconvex
-from deceiver_binary_search import deception_binary_search
-import numpy as np
-from dataclasses import asdict
 import time
-from typing import Callable, Iterable
+from collections.abc import Callable, Iterable
+from dataclasses import asdict
+
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
+
+from deceiver_binary_search import deception_binary_search
+from deceiver_nonconvex import deception_nonconvex
+from deception import verify_deception_result
+from zs_game import ZSGame
 
 plt.rcParams.update({"text.usetex": True, "font.family": "CMU Serif", "font.size": 14})
 
@@ -17,6 +19,8 @@ NUM_ROWS = 5
 NUM_COLS = 5
 SANITY_CHECK = False
 
+DEFAULT_RNG = np.random.default_rng(42)
+
 
 def sample_deceptions(
     num_games: int,
@@ -25,7 +29,7 @@ def sample_deceptions(
     deception_budgets: Iterable[float],
     method: Callable,
     games=None,
-    rng=np.random.default_rng(42),
+    rng=DEFAULT_RNG,
 ):
     if games is None:
         games = rng.uniform(low=-5, high=5, size=(num_games, num_rows, num_cols))

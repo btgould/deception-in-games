@@ -1,9 +1,9 @@
-from zs_game import ZSGame
+import matplotlib.pyplot as plt
+import numpy as np
+
 from deceiver_binary_search import deception_binary_search
 from deceiver_nonconvex import deception_nonconvex
-
-import numpy as np
-import matplotlib.pyplot as plt
+from zs_game import ZSGame
 
 rps = ZSGame(
     np.array(

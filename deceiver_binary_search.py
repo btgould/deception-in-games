@@ -1,11 +1,10 @@
-from zs_game import ZSGame
-from deception import DeceptionResult
-
+import gurobipy as gp
 import numpy as np
 import numpy.typing as npt
+from gurobipy import GRB, Model
 
-import gurobipy as gp
-from gurobipy import Model, GRB
+from deception import DeceptionResult
+from zs_game import ZSGame
 
 FArray = npt.NDArray[np.float64]
 

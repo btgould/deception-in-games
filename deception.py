@@ -1,8 +1,9 @@
-from zs_game import ZSGame
+from dataclasses import dataclass
 
 import numpy as np
 import numpy.typing as npt
-from dataclasses import dataclass
+
+from zs_game import ZSGame
 
 FArray = npt.NDArray[np.float64]
 
