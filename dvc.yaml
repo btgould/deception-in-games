@@ -1,0 +1,233 @@
+stages:
+  # ---------------------------------------------------------------- game batches
+  # Sampling is its own stage so that "the same batch of games for every method /
+  # tolerance" is a property of the DAG rather than of matching seed arithmetic.
+  # No `params:` block is needed anywhere below: every param reaches its stage
+  # through the interpolated `cmd`, which is itself part of the stage hash.
+  sample_compare_games:
+    cmd: >-
+      python sampling.py --seed ${seed} ${games} ${compare.games}
+      --out data/games/compare.npz
+    deps:
+      - sampling.py
+    outs:
+      - data/games/compare.npz
+
+  sample_timing_games:
+    matrix:
+      size: ${timing.sizes}
+    cmd: >-
+      python sampling.py --seed ${seed} ${games} --num_games ${timing.num_games}
+      --num_rows ${item.size} --num_cols ${item.size}
+      --out data/games/timing_n${item.size}.npz
+    deps:
+      - sampling.py
+    outs:
+      - data/games/timing_n${item.size}.npz
+
+  sample_tolerance_games:
+    cmd: >-
+      python sampling.py --seed ${seed} ${games} ${tolerance.games}
+      --out data/games/tolerance.npz
+    deps:
+      - sampling.py
+    outs:
+      - data/games/tolerance.npz
+
+  sample_rps_game:
+    cmd: python sampling.py ${rps.game} --out data/games/rps.npz
+    deps:
+      - sampling.py
+    outs:
+      - data/games/rps.npz
+
+  # ------------------------------------------ improvement vs deception budget
+  compare:
+    matrix:
+      method: ${compare.methods}
+    cmd: >-
+      python deception.py --label compare --method ${item.method}
+      --games data/games/compare.npz ${solver} ${compare.deception}
+      --out_csv results/compare/${item.method}.csv
+      --out_npz results/compare/${item.method}.npz
+    deps:
+      - deception.py
+      - methods.py
+      - sampling.py
+      - zs_game.py
+      - deceiver_binary_search.py
+      - deceiver_nonconvex.py
+      - data/games/compare.npz
+    outs:
+      - results/compare/${item.method}.csv
+      - results/compare/${item.method}.npz
+
+  collect_compare:
+    cmd: >-
+      python analysis.py --inputs results/compare
+      --out_csv results/compare.csv --out_metrics metrics/compare.json
+    deps:
+      - analysis.py
+      - results/compare
+    outs:
+      - results/compare.csv
+    metrics:
+      - metrics/compare.json:
+          cache: false
+
+  # ------------------------------------------------ computation time vs game size
+  # Split by solver rather than swept as one matrix because the nonconvex solver
+  # only runs up to 7x7 and `matrix` has no filtering.
+  timing_binsearch:
+    matrix:
+      size: ${timing.sizes}
+    cmd: >-
+      python deception.py --label timing --method binsearch_robust
+      --games data/games/timing_n${item.size}.npz ${solver} ${timing.deception}
+      --out_csv results/timing/binsearch_robust_n${item.size}.csv
+      --out_npz results/timing/binsearch_robust_n${item.size}.npz
+    deps:
+      - deception.py
+      - methods.py
+      - sampling.py
+      - zs_game.py
+      - deceiver_binary_search.py
+      - data/games/timing_n${item.size}.npz
+    outs:
+      - results/timing/binsearch_robust_n${item.size}.csv
+      - results/timing/binsearch_robust_n${item.size}.npz
+
+  timing_nonconvex:
+    matrix:
+      size: ${timing.nonconvex_sizes}
+    cmd: >-
+      python deception.py --label timing --method nonconvex
+      --games data/games/timing_n${item.size}.npz ${solver} ${timing.deception}
+      --time_limit ${timing.nonconvex_time_limit}
+      --out_csv results/timing/nonconvex_n${item.size}.csv
+      --out_npz results/timing/nonconvex_n${item.size}.npz
+    deps:
+      - deception.py
+      - methods.py
+      - sampling.py
+      - zs_game.py
+      - deceiver_nonconvex.py
+      - data/games/timing_n${item.size}.npz
+    outs:
+      - results/timing/nonconvex_n${item.size}.csv
+      - results/timing/nonconvex_n${item.size}.npz
+
+  collect_timing:
+    cmd: >-
+      python analysis.py --inputs results/timing
+      --out_csv results/timing.csv --out_metrics metrics/timing.json
+    deps:
+      - analysis.py
+      - results/timing
+    outs:
+      - results/timing.csv
+    metrics:
+      - metrics/timing.json:
+          cache: false
+
+  # -------------------------------------- improvement vs binary search tolerance
+  tolerance:
+    matrix:
+      method: ${tolerance.methods}
+      dv: ${tolerance.tolerances}
+    cmd: >-
+      python deception.py --label tolerance --method ${item.method}
+      --games data/games/tolerance.npz ${solver} ${tolerance.deception}
+      --dv ${item.dv}
+      --out_csv results/tolerance/${item.method}_dv${item.dv}.csv
+      --out_npz results/tolerance/${item.method}_dv${item.dv}.npz
+    deps:
+      - deception.py
+      - methods.py
+      - sampling.py
+      - zs_game.py
+      - deceiver_binary_search.py
+      - data/games/tolerance.npz
+    outs:
+      - results/tolerance/${item.method}_dv${item.dv}.csv
+      - results/tolerance/${item.method}_dv${item.dv}.npz
+
+  collect_tolerance:
+    cmd: >-
+      python analysis.py --inputs results/tolerance
+      --out_csv results/tolerance.csv --out_metrics metrics/tolerance.json
+    deps:
+      - analysis.py
+      - results/tolerance
+    outs:
+      - results/tolerance.csv
+    metrics:
+      - metrics/tolerance.json:
+          cache: false
+
+  # ------------------------------------------------ rock-paper-scissors reference
+  rps:
+    matrix:
+      method: ${rps.methods}
+    cmd: >-
+      python deception.py --label rps --method ${item.method}
+      --games data/games/rps.npz ${solver} ${rps.deception}
+      --out_csv results/rps/${item.method}.csv
+      --out_npz results/rps/${item.method}.npz
+    deps:
+      - deception.py
+      - methods.py
+      - sampling.py
+      - zs_game.py
+      - deceiver_binary_search.py
+      - deceiver_nonconvex.py
+      - data/games/rps.npz
+    outs:
+      - results/rps/${item.method}.csv
+      - results/rps/${item.method}.npz
+
+  collect_rps:
+    cmd: >-
+      python analysis.py --inputs results/rps
+      --out_csv results/rps.csv --out_metrics metrics/rps.json
+    deps:
+      - analysis.py
+      - results/rps
+    outs:
+      - results/rps.csv
+    metrics:
+      - metrics/rps.json:
+          cache: false
+
+plots:
+  - results/compare.csv:
+      template: errorband
+      x: deception_budget
+      y: improvement
+      x_label: Deception budget
+      y_label: Improvement
+      title: Improvement vs Deception Budget
+
+  - results/timing.csv:
+      template: line_log_y
+      x: size
+      y: computation_time
+      x_label: Game size (n x n)
+      y_label: Mean computation time (s)
+      title: Computation Time vs Game Size
+
+  - results/tolerance.csv:
+      template: line_log_x
+      x: dv
+      y: improvement
+      x_label: Binary search tolerance
+      y_label: Mean improvement
+      title: Improvement vs Binary Search Tolerance
+
+  - results/rps.csv:
+      template: line
+      x: deception_budget
+      y: improvement
+      x_label: Deception budget
+      y_label: Improvement
+      title: Deception Improvement vs Budget for RPS

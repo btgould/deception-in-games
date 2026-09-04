@@ -7,9 +7,18 @@ dependencies = [
     "numpy~=2.2.6",
     "scipy~=1.15.3",
     "gurobipy~=12.0.2",
-    "matplotlib~=3.10.3",
     "pandas~=2.3.1",
+    "dvc~=3.61",
+    "pyyaml~=6.0",
 ]
+
+[dependency-groups]
+dev = ["pytest~=8.4"]
 
 [tool.uv]
 package = false
+
+[tool.pytest.ini_options]
+# The modules are flat scripts run from the project root, not an installed package.
+pythonpath = ["."]
+testpaths = ["tests"]

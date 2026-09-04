@@ -1,0 +1,29 @@
+{
+  "num_results": 12,
+  "methods": {
+    "binsearch_nonrobust": {
+      "num_results": 4,
+      "computation_time_mean": 0.03187687824538438,
+      "computation_time_std": 0.0024998521833743594,
+      "computation_time_max": 0.0354617959965253,
+      "improvement_mean": 0.5994782203517641,
+      "improvement_std": 0.5237471324364598
+    },
+    "binsearch_robust": {
+      "num_results": 4,
+      "computation_time_mean": 0.03209656375111075,
+      "computation_time_std": 0.0020847757772542662,
+      "computation_time_max": 0.0349056550039676,
+      "improvement_mean": 0.06883940475311598,
+      "improvement_std": 1.3079888892083762
+    },
+    "nonconvex": {
+      "num_results": 4,
+      "computation_time_mean": 0.2272397682500013,
+      "computation_time_std": 0.1531569198092881,
+      "computation_time_max": 0.4003839460056042,
+      "improvement_mean": 1.7012325657272578,
+      "improvement_std": 1.0052957100129583
+    }
+  }
+}

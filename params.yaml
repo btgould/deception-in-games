@@ -1,0 +1,77 @@
+# Every section here is interpolated straight into a `cmd` in dvc.yaml: DVC expands a
+# dict into `--key value` flags, so the keys are the argparse flags of sampling.py,
+# deception.py and analysis.py. A stage overrides a single flag by repeating it after
+# the expansion (argparse keeps the last occurrence).
+
+# Base seed for every game batch in the suite. Each batch derives an independent
+# stream from (seed, label, shape) via sampling.derive_rng, so batches are
+# order-independent.
+seed: 42
+
+# Payoff entry bounds, shared by every sampled batch.
+games:
+  low: -5.0
+  high: 5.0
+
+# Solver options shared by every deception stage.
+solver:
+  sanity_check: false
+  # Binary search tolerance on the victim's guaranteed rationality level.
+  dv: 1.0e-3
+  # Gurobi time limit (s) for the nonconvex QCP. Results are wall-clock dependent.
+  time_limit: 60.0
+  mip_gap: 0.01
+  gurobi_seed: 0
+  # 0 lets Gurobi choose; set to 1 for reproducible timings at the cost of speed.
+  gurobi_threads: 0
+
+compare:
+  methods: [nonconvex, binsearch_robust, binsearch_nonrobust]
+  games:
+    num_games: 5
+    num_rows: 5
+    num_cols: 5
+  deception:
+    budgets: [1.0, 2.25, 3.5, 4.75, 6.0]
+
+timing:
+  sizes: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  # The nonconvex solver is too slow past 7x7, so it sweeps a shorter range.
+  nonconvex_sizes: [2, 3, 4, 5, 6, 7]
+  nonconvex_time_limit: 300.0
+  num_games: 10
+  deception:
+    budgets: [3.0]
+
+tolerance:
+  methods: [binsearch_robust, binsearch_nonrobust]
+  tolerances:
+    [
+      0.1,
+      0.027826,
+      0.0077426,
+      0.0021544,
+      0.00059948,
+      0.00016681,
+      4.6416e-05,
+      1.2915e-05,
+      3.5938e-06,
+      1.0e-06,
+    ]
+  games:
+    num_games: 100
+    num_rows: 5
+    num_cols: 5
+  deception:
+    budgets: [3.0]
+
+rps:
+  methods: [nonconvex, binsearch_robust]
+  # Rock-paper-scissors, row major. Nested lists cannot be interpolated into a cmd.
+  game:
+    num_rows: 3
+    num_cols: 3
+    outcomes: [0.0, 1.0, -1.0, -1.0, 0.0, 1.0, 1.0, -1.0, 0.0]
+  deception:
+    budgets:
+      [0.1, 0.42222, 0.74444, 1.0667, 1.3889, 1.7111, 2.0333, 2.3556, 2.6778, 3.0]

@@ -1,4 +1,5 @@
 __pycache__
 gurobi.log
-*.csv
+/*.csv
 .venv
+dvc_plots

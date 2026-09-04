@@ -3,20 +3,29 @@ import numpy as np
 import numpy.typing as npt
 from gurobipy import GRB, Model
 
-from deception import DeceptionResult
+from methods import DeceptionResult
 from zs_game import ZSGame
 
 FArray = npt.NDArray[np.float64]
 
 
 def deception_nonconvex(
-    game: ZSGame, deception_budget: float, time_limit: float = 60
+    game: ZSGame,
+    deception_budget: float,
+    time_limit: float = 60,
+    mip_gap: float = 0.01,
+    gurobi_seed: int = 0,
+    gurobi_threads: int = 0,
 ) -> DeceptionResult:
     """
     Computes the optimal deception strategy for the attacker by solving a non-convex program.
     Args:
         game: The zero-sum game to analyze.
         deception_budget: The budget for deception.
+        time_limit: Gurobi time limit in seconds.
+        mip_gap: Relative MIP gap at which Gurobi stops.
+        gurobi_seed: Gurobi's internal random seed.
+        gurobi_threads: Gurobi thread count; 0 lets Gurobi choose.
     Returns:
         A DeceptionResult containing the best deception strategy and victim's response.
     """
@@ -37,9 +46,11 @@ def deception_nonconvex(
 
     m = Model()
     m.setParam("OutputFlag", 0)  # silent
-    m.setParam("MIPGap", 0.01)
+    m.setParam("MIPGap", mip_gap)
     m.setParam("TimeLimit", time_limit)
     m.setParam("NonConvex", 2)  # Enable non-convex QCP
+    m.setParam("Seed", gurobi_seed)
+    m.setParam("Threads", gurobi_threads)
 
     # Decision variables
     D = m.addVars(
@@ -117,6 +128,11 @@ def deception_nonconvex(
     )
 
     m.optimize()
+
+    if m.SolCount == 0:
+        raise RuntimeError(
+            f"Nonconvex model found no solution within {time_limit}s (status {m.status})"
+        )
 
     x_sol = np.array([x[i].X for i in range(num_rows)], dtype=float)
     D_sol = np.array([[D[i, j].X for j in range(num_cols)] for i in range(num_rows)])

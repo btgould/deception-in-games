@@ -26,16 +26,24 @@ class ZSGame:
         self.outcomes = outcomes
 
     @classmethod
-    def random(cls, num_rows: int, num_cols: int):
+    def random(
+        cls,
+        num_rows: int,
+        num_cols: int,
+        rng: np.random.Generator,
+        low: float = -5.0,
+        high: float = 5.0,
+    ):
         """
         Alternative constructor to initialize a random, 2 player, zero-sum game.
         Args:
             num_rows: Number of rows (actions for p1) in the game
             num_cols: Number of cols (actions for p2) in the game
             rng: Random number generator to use
+            low: Lower bound on payoff entries
+            high: Upper bound on payoff entries
         """
-        # NOTE: should probably parameterize this range, at least relative to the size of noise disturbances
-        instance = cls(np.random.uniform(low=-5, high=5, size=(num_rows, num_cols)))
+        instance = cls(rng.uniform(low=low, high=high, size=(num_rows, num_cols)))
         return instance
 
     def to_linprog(self) -> tuple[FArray, FArray, FArray, FArray, FArray]:
@@ -109,18 +117,18 @@ class ZSGame:
         return instance
 
     @classmethod
-    def random_disturbance(cls, game, eps=0.5):
+    def random_disturbance(cls, game, rng: np.random.Generator, eps: float = 0.5):
         """
         Generates a new ZSGame by adding bounded, uniform noise to the outcomes of this game.
         The noise in bounded in such a way that the difference (in operator norm induced by 1
         norm) of the disturbed and original games is at most eps.
         Args:
+            game: The game to disturb
             rng: Random number generator to use
+            eps: Bound on the induced 1-norm of the disturbance
         """
         rng_rad = eps / (2 * game.outcomes.shape[0])
-        disturbance = np.random.uniform(
-            low=-rng_rad, high=rng_rad, size=game.outcomes.shape
-        )
+        disturbance = rng.uniform(low=-rng_rad, high=rng_rad, size=game.outcomes.shape)
         return game.from_disturbance(disturbance)
 
     def tree_flatten(self):

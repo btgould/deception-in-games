@@ -1,0 +1,64 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "values": "<DVC_METRIC_DATA>"
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum['<DVC_METRIC_X>'])",
+      "as": "dvc_x"
+    },
+    {
+      "calculate": "toNumber(datum['<DVC_METRIC_Y>'])",
+      "as": "dvc_y"
+    }
+  ],
+  "title": {
+    "text": "<DVC_METRIC_TITLE>",
+    "anchor": "middle"
+  },
+  "width": "<DVC_METRIC_PLOT_WIDTH>",
+  "height": "<DVC_METRIC_PLOT_HEIGHT>",
+  "encoding": {
+    "x": {
+      "field": "dvc_x",
+      "type": "quantitative",
+      "title": "<DVC_METRIC_X_LABEL>",
+      "scale": {
+        "type": "log"
+      }
+    },
+    "color": {
+      "field": "method_label",
+      "type": "nominal",
+      "title": "Method"
+    },
+    "strokeDash": {
+      "field": "rev",
+      "type": "nominal",
+      "title": "Revision"
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "point": {
+          "filled": true,
+          "size": 60
+        }
+      },
+      "encoding": {
+        "y": {
+          "field": "dvc_y",
+          "type": "quantitative",
+          "title": "<DVC_METRIC_Y_LABEL>",
+          "scale": {
+            "zero": false
+          },
+          "aggregate": "mean"
+        }
+      }
+    }
+  ]
+}

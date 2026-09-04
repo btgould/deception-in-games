@@ -1,0 +1,21 @@
+{
+  "num_results": 12,
+  "methods": {
+    "binsearch_robust": {
+      "num_results": 8,
+      "computation_time_mean": 0.021435620372358213,
+      "computation_time_std": 0.01035703153305599,
+      "computation_time_max": 0.0361321779928403,
+      "improvement_mean": -0.37033953493699073,
+      "improvement_std": 2.074165477229409
+    },
+    "nonconvex": {
+      "num_results": 4,
+      "computation_time_mean": 0.03955372575364888,
+      "computation_time_std": 0.02198556507395718,
+      "computation_time_max": 0.0712946630083024,
+      "improvement_mean": 1.9491795846880022,
+      "improvement_std": 0.3495769012163312
+    }
+  }
+}

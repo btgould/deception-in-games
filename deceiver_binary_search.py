@@ -3,12 +3,10 @@ import numpy as np
 import numpy.typing as npt
 from gurobipy import GRB, Model
 
-from deception import DeceptionResult
+from methods import DV, DeceptionResult
 from zs_game import ZSGame
 
 FArray = npt.NDArray[np.float64]
-
-DV: float = 1e-3
 
 
 def _tolerance_bound(
@@ -56,13 +54,22 @@ def _tolerance_bound(
 
 
 def deception_binary_search(
-    game: ZSGame, deception_budget: float, dv: float = DV, robustify: bool = True
+    game: ZSGame,
+    deception_budget: float,
+    dv: float = DV,
+    robustify: bool = True,
+    gurobi_seed: int = 0,
+    gurobi_threads: int = 0,
 ) -> DeceptionResult:
     """
     Computes the optimal deception strategy for the attacker using binary search.
     Args:
         game: The zero-sum game to analyze.
         deception_budget: The budget for deception.
+        dv: Tolerance on the victim's guaranteed rationality level.
+        robustify: Re-solve the victim's best response to bound numerical slack.
+        gurobi_seed: Gurobi's internal random seed.
+        gurobi_threads: Gurobi thread count; 0 lets Gurobi choose.
     Returns:
         A DeceptionResult containing the best deception strategy and defender's response.
     """
@@ -96,6 +103,8 @@ def deception_binary_search(
             m = Model()
             m.setParam(GRB.Param.OutputFlag, 0)  # silent
             m.setParam(GRB.Param.FeasibilityTol, 1e-9)
+            m.setParam(GRB.Param.Seed, gurobi_seed)
+            m.setParam(GRB.Param.Threads, gurobi_threads)
 
             y = m.addVars(num_cols, name="y")
             d = m.addVars(num_rows, lb=-GRB.INFINITY, name="d")
