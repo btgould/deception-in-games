@@ -1,614 +1,433 @@
 schema: '2.0'
 stages:
   sample_compare_games:
-    cmd: python run_experiment.py sample-games --kind compare --out 
-      data/games/compare.npz
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 5 
+      --num_rows 5 --num_cols 5 --out data/games/compare.npz
     deps:
-    - path: run_experiment.py
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
-    params:
-      params.yaml:
-        compare.num_cols: 5
-        compare.num_games: 2
-        compare.num_rows: 5
-        games:
-          low: -5.0
-          high: 5.0
-        seed: 42
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     outs:
     - path: data/games/compare.npz
       hash: md5
-      md5: 0dcd6a2892d694953f37cb0f4a441ae5
-      size: 1012
+      md5: 7d903a242e309ebb07bfb224694a414c
+      size: 1598
   sample_timing_games@2:
-    cmd: python run_experiment.py sample-games --kind timing --size 2 --out 
-      data/games/timing_n2.npz
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 2 --num_cols 2 --out data/games/timing_n2.npz
     deps:
-    - path: run_experiment.py
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
-    params:
-      params.yaml:
-        games:
-          low: -5.0
-          high: 5.0
-        seed: 42
-        timing.num_games: 2
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     outs:
     - path: data/games/timing_n2.npz
       hash: md5
-      md5: 84c4dde999713975d4871d846ec5db88
-      size: 656
+      md5: 516ff065207773990cdc6b22947dc47c
+      size: 911
   sample_timing_games@3:
-    cmd: python run_experiment.py sample-games --kind timing --size 3 --out 
-      data/games/timing_n3.npz
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 3 --num_cols 3 --out data/games/timing_n3.npz
     deps:
-    - path: run_experiment.py
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
-    params:
-      params.yaml:
-        games:
-          low: -5.0
-          high: 5.0
-        seed: 42
-        timing.num_games: 2
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     outs:
     - path: data/games/timing_n3.npz
       hash: md5
-      md5: ce5f567e005ad6d22ca1c6cc613f4b9e
-      size: 742
+      md5: 5998169d5f81bf6a26f4b5f5264f6df5
+      size: 1329
   sample_tolerance_games:
-    cmd: python run_experiment.py sample-games --kind tolerance --out 
-      data/games/tolerance.npz
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 100 
+      --num_rows 5 --num_cols 5 --out data/games/tolerance.npz
     deps:
-    - path: run_experiment.py
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
-    params:
-      params.yaml:
-        games:
-          low: -5.0
-          high: 5.0
-        seed: 42
-        tolerance.num_cols: 5
-        tolerance.num_games: 4
-        tolerance.num_rows: 5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     outs:
     - path: data/games/tolerance.npz
       hash: md5
-      md5: 7ae460e0cf2f44e8f682cb6eaa7a79e7
-      size: 1430
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
   compare@nonconvex:
-    cmd: python run_experiment.py compare --method nonconvex --games 
-      data/games/compare.npz --out-csv results/compare/nonconvex.csv --out-npz 
+    cmd: python deception.py --label compare --method nonconvex --games 
+      data/games/compare.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 1.0 2.25 3.5 4.75 6.0 
+      --out_csv results/compare/nonconvex.csv --out_npz 
       results/compare/nonconvex.npz
     deps:
     - path: data/games/compare.npz
       hash: md5
-      md5: 0dcd6a2892d694953f37cb0f4a441ae5
-      size: 1012
+      md5: 7d903a242e309ebb07bfb224694a414c
+      size: 1598
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 20650515f259c2e7c13fe0ce90ab35c8
-      size: 4717
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        compare.budgets:
-        - 1.0
-        - 3.0
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/compare/nonconvex.csv
       hash: md5
-      md5: 54995894291f134feb4c8eac31af4a07
-      size: 659
+      md5: 16ee280828ddaa71ecf944adcbdce18b
+      size: 3349
     - path: results/compare/nonconvex.npz
       hash: md5
-      md5: 50d00edcce7bcec2acafd5f1d4ba87e5
-      size: 1435
+      md5: 6eede7a7e2ef3af486fccda45e137c2f
+      size: 4123
   compare@binsearch_robust:
-    cmd: python run_experiment.py compare --method binsearch_robust --games 
-      data/games/compare.npz --out-csv results/compare/binsearch_robust.csv 
-      --out-npz results/compare/binsearch_robust.npz
+    cmd: python deception.py --label compare --method binsearch_robust --games 
+      data/games/compare.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 1.0 2.25 3.5 4.75 6.0 
+      --out_csv results/compare/binsearch_robust.csv --out_npz 
+      results/compare/binsearch_robust.npz
     deps:
     - path: data/games/compare.npz
       hash: md5
-      md5: 0dcd6a2892d694953f37cb0f4a441ae5
-      size: 1012
+      md5: 7d903a242e309ebb07bfb224694a414c
+      size: 1598
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 20650515f259c2e7c13fe0ce90ab35c8
-      size: 4717
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        compare.budgets:
-        - 1.0
-        - 3.0
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/compare/binsearch_robust.csv
       hash: md5
-      md5: 19b22edb754f17f147287848962262b4
-      size: 746
+      md5: 94b2e300f11557646525669ca05293cf
+      size: 3888
     - path: results/compare/binsearch_robust.npz
       hash: md5
-      md5: 9d6b9e970a683fb4686568d93ecff5b8
-      size: 1444
+      md5: 5bc310ac929a2c2ada19dd62fec95e19
+      size: 3252
   compare@binsearch_nonrobust:
-    cmd: python run_experiment.py compare --method binsearch_nonrobust --games 
-      data/games/compare.npz --out-csv results/compare/binsearch_nonrobust.csv 
-      --out-npz results/compare/binsearch_nonrobust.npz
+    cmd: python deception.py --label compare --method binsearch_nonrobust 
+      --games data/games/compare.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 1.0 2.25 3.5 4.75 6.0 
+      --out_csv results/compare/binsearch_nonrobust.csv --out_npz 
+      results/compare/binsearch_nonrobust.npz
     deps:
     - path: data/games/compare.npz
       hash: md5
-      md5: 0dcd6a2892d694953f37cb0f4a441ae5
-      size: 1012
+      md5: 7d903a242e309ebb07bfb224694a414c
+      size: 1598
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 20650515f259c2e7c13fe0ce90ab35c8
-      size: 4717
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        compare.budgets:
-        - 1.0
-        - 3.0
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/compare/binsearch_nonrobust.csv
       hash: md5
-      md5: c1e16aa1ee45c1b71690d1718485b2dd
-      size: 770
+      md5: 96fc999b0fddda333325d104fabe90cc
+      size: 4073
     - path: results/compare/binsearch_nonrobust.npz
       hash: md5
-      md5: 17609b1dbf639e42c4c576459dccd3be
-      size: 1436
+      md5: bd2b0d29e8a041cfc39c8edb305c6e57
+      size: 3262
   collect_compare:
-    cmd: python run_experiment.py collect --inputs results/compare --out-csv 
-      results/compare.csv --out-metrics metrics/compare.json
+    cmd: python analysis.py --inputs results/compare --out_csv 
+      results/compare.csv --out_metrics metrics/compare.json
     deps:
+    - path: analysis.py
+      hash: md5
+      md5: a7f566f1435deceac7429ccb8809f55d
+      size: 1970
     - path: results/compare
       hash: md5
-      md5: f6795189e47b6afe4570a2498b5766c6.dir
-      size: 6614
+      md5: 637de1fa50f322ad096e3ef219764be9.dir
+      size: 22071
       nfiles: 7
-    - path: run_experiment.py
-      hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
     outs:
     - path: metrics/compare.json
       hash: md5
-      md5: 04cb00c6ed9a83db2bc4fcf77ec3cfe5
+      md5: 7d7f804fbddc2dcd7713a94cca37e9c1
       size: 941
     - path: results/compare.csv
       hash: md5
-      md5: 6e0f1b28f832bd0a2747c3b980f7257f
-      size: 1850
+      md5: 208f0f738dc06594aa9d952d2949c5d0
+      size: 10847
   timing_binsearch@2:
-    cmd: python run_experiment.py timing --method binsearch_robust --games 
-      data/games/timing_n2.npz --out-csv results/timing/binsearch_robust_n2.csv 
-      --out-npz results/timing/binsearch_robust_n2.npz
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n2.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n2.csv --out_npz 
+      results/timing/binsearch_robust_n2.npz
     deps:
     - path: data/games/timing_n2.npz
       hash: md5
-      md5: 84c4dde999713975d4871d846ec5db88
-      size: 656
+      md5: 516ff065207773990cdc6b22947dc47c
+      size: 911
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
-        timing.budget: 3.0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/timing/binsearch_robust_n2.csv
       hash: md5
-      md5: 1bfc01c77b81884dbf1a3c224cc1f5ff
-      size: 443
+      md5: 908ee184d26f723f71679f9a8694d0cb
+      size: 1566
     - path: results/timing/binsearch_robust_n2.npz
       hash: md5
-      md5: c3c1f56e1020bebc941c51e87fa1365e
-      size: 940
+      md5: c004ec7e9981193dbc4729d1cbabbb0b
+      size: 1327
   timing_binsearch@3:
-    cmd: python run_experiment.py timing --method binsearch_robust --games 
-      data/games/timing_n3.npz --out-csv results/timing/binsearch_robust_n3.csv 
-      --out-npz results/timing/binsearch_robust_n3.npz
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n3.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n3.csv --out_npz 
+      results/timing/binsearch_robust_n3.npz
     deps:
     - path: data/games/timing_n3.npz
       hash: md5
-      md5: ce5f567e005ad6d22ca1c6cc613f4b9e
-      size: 742
+      md5: 5998169d5f81bf6a26f4b5f5264f6df5
+      size: 1329
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
-        timing.budget: 3.0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/timing/binsearch_robust_n3.csv
       hash: md5
-      md5: 17b4c9fd932c0c8d4d86f61472e3a580
-      size: 444
+      md5: 32eedaa313cd1eea74672e4a693445cc
+      size: 1572
     - path: results/timing/binsearch_robust_n3.npz
       hash: md5
-      md5: 0e1edb267e6a30875e25cd69308da22f
-      size: 1051
+      md5: 30856e899e543986f564233eb3755181
+      size: 1927
   timing_nonconvex@2:
-    cmd: python run_experiment.py timing --method nonconvex --games 
-      data/games/timing_n2.npz --out-csv results/timing/nonconvex_n2.csv 
-      --out-npz results/timing/nonconvex_n2.npz
+    cmd: python deception.py --label timing --method nonconvex --games 
+      data/games/timing_n2.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --time_limit 300.0 
+      --out_csv results/timing/nonconvex_n2.csv --out_npz 
+      results/timing/nonconvex_n2.npz
     deps:
     - path: data/games/timing_n2.npz
       hash: md5
-      md5: 84c4dde999713975d4871d846ec5db88
-      size: 656
+      md5: 516ff065207773990cdc6b22947dc47c
+      size: 911
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 20650515f259c2e7c13fe0ce90ab35c8
-      size: 4717
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
-        timing.budget: 3.0
-        timing.nonconvex_time_limit: 10
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/timing/nonconvex_n2.csv
       hash: md5
-      md5: 1dfa663c3834719b0e9e783fccb0ddf1
-      size: 399
+      md5: b824bb26503a91c4257ab7f0f50eacf1
+      size: 1446
     - path: results/timing/nonconvex_n2.npz
       hash: md5
-      md5: d1251e65c7224e8404cb0ee5992c9771
-      size: 947
+      md5: 897865ebcb5da0978e4af2e93624cfba
+      size: 1344
   timing_nonconvex@3:
-    cmd: python run_experiment.py timing --method nonconvex --games 
-      data/games/timing_n3.npz --out-csv results/timing/nonconvex_n3.csv 
-      --out-npz results/timing/nonconvex_n3.npz
+    cmd: python deception.py --label timing --method nonconvex --games 
+      data/games/timing_n3.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --time_limit 300.0 
+      --out_csv results/timing/nonconvex_n3.csv --out_npz 
+      results/timing/nonconvex_n3.npz
     deps:
     - path: data/games/timing_n3.npz
       hash: md5
-      md5: ce5f567e005ad6d22ca1c6cc613f4b9e
-      size: 742
+      md5: 5998169d5f81bf6a26f4b5f5264f6df5
+      size: 1329
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 20650515f259c2e7c13fe0ce90ab35c8
-      size: 4717
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
-        timing.budget: 3.0
-        timing.nonconvex_time_limit: 10
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/timing/nonconvex_n3.csv
       hash: md5
-      md5: 9f5a3a54d3bcc87c229f758316bb8cce
-      size: 406
+      md5: 38ea37992a4312ede8a65b2eb1024184
+      size: 1438
     - path: results/timing/nonconvex_n3.npz
       hash: md5
-      md5: 4cf278151ef2d755fe56490102fbc662
-      size: 1081
+      md5: 9c13520645d51e6d1fa17ba897d77efd
+      size: 2028
   collect_timing:
-    cmd: python run_experiment.py collect --inputs results/timing --out-csv 
-      results/timing.csv --out-metrics metrics/timing.json
+    cmd: python analysis.py --inputs results/timing --out_csv results/timing.csv
+      --out_metrics metrics/timing.json
     deps:
+    - path: analysis.py
+      hash: md5
+      md5: a7f566f1435deceac7429ccb8809f55d
+      size: 1970
     - path: results/timing
       hash: md5
-      md5: 84260fcd837f84b68cb05340732e8f15.dir
-      size: 9393
-      nfiles: 13
-    - path: run_experiment.py
-      hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
+      md5: 05b71a97e5cc7ec9269155d583d5ac23.dir
+      size: 171632
+      nfiles: 41
     outs:
     - path: metrics/timing.json
       hash: md5
-      md5: 88d0ffde595dc48eac0b37ce8c51e8a3
-      size: 637
+      md5: 93e4459661a50d959e63d9762ce3b9a6
+      size: 630
     - path: results/timing.csv
       hash: md5
-      md5: 9781c55b907d03dc3b5e9e4a5764feab
-      size: 1800
+      md5: b63767888b0711f88c42a99b2501155e
+      size: 28300
   tolerance@binsearch_robust-0.1:
-    cmd: python run_experiment.py tolerance --method binsearch_robust --dv 0.1 
-      --games data/games/tolerance.npz --out-csv 
-      results/tolerance/binsearch_robust_dv0.1.csv --out-npz 
+    cmd: python deception.py --label tolerance --method binsearch_robust --games
+      data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.1 --out_csv 
+      results/tolerance/binsearch_robust_dv0.1.csv --out_npz 
       results/tolerance/binsearch_robust_dv0.1.npz
     deps:
     - path: data/games/tolerance.npz
       hash: md5
-      md5: 7ae460e0cf2f44e8f682cb6eaa7a79e7
-      size: 1430
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        sanity_check: false
-        solver.gurobi_seed: 0
-        solver.gurobi_threads: 0
-        tolerance.budget: 3.0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/tolerance/binsearch_robust_dv0.1.csv
       hash: md5
-      md5: a3329bf306907a1ec97330ea74bacc4b
-      size: 747
+      md5: da0f3c05ebe7f634666ed58ff01813e9
+      size: 15213
     - path: results/tolerance/binsearch_robust_dv0.1.npz
       hash: md5
-      md5: 191da29bf5ea39dfbda8e3f62f3215cd
-      size: 1925
+      md5: 92a100285f200187aec9992600670683
+      size: 24934
   tolerance@binsearch_robust-0.001:
     cmd: python run_experiment.py tolerance --method binsearch_robust --dv 0.001
       --games data/games/tolerance.npz --out-csv 
@@ -663,58 +482,45 @@ stages:
       md5: 3571f6af1a596c5583152be953ee9bc6
       size: 1930
   tolerance@binsearch_nonrobust-0.1:
-    cmd: python run_experiment.py tolerance --method binsearch_nonrobust --dv 
-      0.1 --games data/games/tolerance.npz --out-csv 
-      results/tolerance/binsearch_nonrobust_dv0.1.csv --out-npz 
+    cmd: python deception.py --label tolerance --method binsearch_nonrobust 
+      --games data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 
+      0.01 --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.1 --out_csv 
+      results/tolerance/binsearch_nonrobust_dv0.1.csv --out_npz 
       results/tolerance/binsearch_nonrobust_dv0.1.npz
     deps:
     - path: data/games/tolerance.npz
       hash: md5
-      md5: 7ae460e0cf2f44e8f682cb6eaa7a79e7
-      size: 1430
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        sanity_check: false
-        solver.gurobi_seed: 0
-        solver.gurobi_threads: 0
-        tolerance.budget: 3.0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv0.1.csv
       hash: md5
-      md5: da8383a8397bfabb349fb8777154e62f
-      size: 770
+      md5: 637d2ba5cfae8e9ba057917420b4718e
+      size: 15933
     - path: results/tolerance/binsearch_nonrobust_dv0.1.npz
       hash: md5
-      md5: 4e69020b43df13aca561f0ec5ca313e0
-      size: 1918
+      md5: c635903238cc097fa74e951b741761ec
+      size: 24934
   tolerance@binsearch_nonrobust-0.001:
     cmd: python run_experiment.py tolerance --method binsearch_nonrobust --dv 
       0.001 --games data/games/tolerance.npz --out-csv 
@@ -769,315 +575,1664 @@ stages:
       md5: f440610e3a2d15fccc469640b47909d4
       size: 1922
   collect_tolerance:
-    cmd: python run_experiment.py collect --inputs results/tolerance --out-csv 
-      results/tolerance.csv --out-metrics metrics/tolerance.json
+    cmd: python analysis.py --inputs results/tolerance --out_csv 
+      results/tolerance.csv --out_metrics metrics/tolerance.json
     deps:
+    - path: analysis.py
+      hash: md5
+      md5: a7f566f1435deceac7429ccb8809f55d
+      size: 1970
     - path: results/tolerance
       hash: md5
-      md5: 77ff65f128f0b326237efe9f95f4a67a.dir
-      size: 10983
-      nfiles: 9
-    - path: run_experiment.py
-      hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
+      md5: 60711a385269befa5221af18456716e4.dir
+      size: 824579
+      nfiles: 41
     outs:
     - path: metrics/tolerance.json
       hash: md5
-      md5: c596cf95120db988b946299b6e31f4f3
-      size: 643
+      md5: 1337f215b2408ced2125b9b2238e7e8c
+      size: 655
     - path: results/tolerance.csv
       hash: md5
-      md5: dd746d3e9feee9f4898751c67436fb91
-      size: 2560
+      md5: 5e13cc0bfde4250ed6eadac7c9a0bbc7
+      size: 314842
   rps@nonconvex:
-    cmd: python run_experiment.py rps --method nonconvex --out-csv 
-      results/rps/nonconvex.csv --out-npz results/rps/nonconvex.npz
+    cmd: python deception.py --label rps --method nonconvex --games 
+      data/games/rps.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 0.1 0.42222 0.74444 1.0667 
+      1.3889 1.7111 2.0333 2.3556 2.6778 3.0 --out_csv results/rps/nonconvex.csv
+      --out_npz results/rps/nonconvex.npz
     deps:
+    - path: data/games/rps.npz
+      hash: md5
+      md5: 0da38a143b678b347b0706c31830bb37
+      size: 587
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 20650515f259c2e7c13fe0ce90ab35c8
-      size: 4717
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        rps.budgets:
-        - 0.5
-        - 1.5
-        - 2.5
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/rps/nonconvex.csv
       hash: md5
-      md5: 374170242ff03eea1893570b58a9495a
-      size: 448
+      md5: 31cd2cee2046c03ad897063bf4a7a416
+      size: 1139
     - path: results/rps/nonconvex.npz
       hash: md5
-      md5: e641f41be254e83d80838329063e2f2a
-      size: 944
+      md5: d2875f6126e605141c39e94e80ae8b2d
+      size: 1182
   rps@binsearch_robust:
-    cmd: python run_experiment.py rps --method binsearch_robust --out-csv 
-      results/rps/binsearch_robust.csv --out-npz 
+    cmd: python deception.py --label rps --method binsearch_robust --games 
+      data/games/rps.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 0.1 0.42222 0.74444 1.0667 
+      1.3889 1.7111 2.0333 2.3556 2.6778 3.0 --out_csv 
+      results/rps/binsearch_robust.csv --out_npz 
       results/rps/binsearch_robust.npz
     deps:
+    - path: data/games/rps.npz
+      hash: md5
+      md5: 0da38a143b678b347b0706c31830bb37
+      size: 587
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 20650515f259c2e7c13fe0ce90ab35c8
-      size: 4717
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        rps.budgets:
-        - 0.5
-        - 1.5
-        - 2.5
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/rps/binsearch_robust.csv
       hash: md5
-      md5: 0d41de301fa72d578477de70eb70e12a
-      size: 521
+      md5: 9a5526163b5d0c1d6f42132fcc90e66a
+      size: 1450
     - path: results/rps/binsearch_robust.npz
       hash: md5
-      md5: e3a26eb6a17c6c0dee7b76d79255a91c
-      size: 907
+      md5: 68fd766b04aaeddcd3a0dc210accd902
+      size: 1231
   collect_rps:
-    cmd: python run_experiment.py collect --inputs results/rps --out-csv 
-      results/rps.csv --out-metrics metrics/rps.json
+    cmd: python analysis.py --inputs results/rps --out_csv results/rps.csv 
+      --out_metrics metrics/rps.json
     deps:
+    - path: analysis.py
+      hash: md5
+      md5: a7f566f1435deceac7429ccb8809f55d
+      size: 1970
     - path: results/rps
       hash: md5
-      md5: 2beaf7ed6eeccf9b6e098d519e663a02.dir
-      size: 2894
+      md5: d65eab42275aed97a4d40357eb8c5369.dir
+      size: 5076
       nfiles: 5
-    - path: run_experiment.py
-      hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
     outs:
     - path: metrics/rps.json
       hash: md5
-      md5: e5cc84be448d6dde16459023fbce6ccf
-      size: 633
+      md5: 799420678a8491cd2e192107689bd533
+      size: 640
     - path: results/rps.csv
       hash: md5
-      md5: 02be1c1ffb4d0c9353ef12caefb192ed
-      size: 802
+      md5: 19a511d230370587953154e348cd3bb8
+      size: 2401
   sample_timing_games@4:
-    cmd: python run_experiment.py sample-games --kind timing --size 4 --out 
-      data/games/timing_n4.npz
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 4 --num_cols 4 --out data/games/timing_n4.npz
     deps:
-    - path: run_experiment.py
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
-    params:
-      params.yaml:
-        games:
-          low: -5.0
-          high: 5.0
-        seed: 42
-        timing.num_games: 2
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     outs:
     - path: data/games/timing_n4.npz
       hash: md5
-      md5: 974f7e1006838a7a7faeace741108b6b
-      size: 860
+      md5: aae72c59467eab909a9163bd7297a926
+      size: 1866
   timing_binsearch@4:
-    cmd: python run_experiment.py timing --method binsearch_robust --games 
-      data/games/timing_n4.npz --out-csv results/timing/binsearch_robust_n4.csv 
-      --out-npz results/timing/binsearch_robust_n4.npz
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n4.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n4.csv --out_npz 
+      results/timing/binsearch_robust_n4.npz
     deps:
     - path: data/games/timing_n4.npz
       hash: md5
-      md5: 974f7e1006838a7a7faeace741108b6b
-      size: 860
+      md5: aae72c59467eab909a9163bd7297a926
+      size: 1866
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
-        timing.budget: 3.0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/timing/binsearch_robust_n4.csv
       hash: md5
-      md5: 2aa2450e9d7ad4771307639df17c3245
-      size: 446
+      md5: 915733111d39f85a880606b3388f5a97
+      size: 1626
     - path: results/timing/binsearch_robust_n4.npz
       hash: md5
-      md5: a380c46c1553800c279323bd0f9e2422
-      size: 1169
+      md5: b4be576447efefe028ecc1e9c6f96c88
+      size: 2546
   sample_timing_games@5:
-    cmd: python run_experiment.py sample-games --kind timing --size 5 --out 
-      data/games/timing_n5.npz
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 5 --num_cols 5 --out data/games/timing_n5.npz
     deps:
-    - path: run_experiment.py
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
-    params:
-      params.yaml:
-        games:
-          low: -5.0
-          high: 5.0
-        seed: 42
-        timing.num_games: 2
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     outs:
     - path: data/games/timing_n5.npz
       hash: md5
-      md5: 0758c9bda32440a20d75a9f204d0b65f
-      size: 1010
+      md5: e71c5bf96dacddc45f01eb593ac65fea
+      size: 2558
   timing_binsearch@5:
-    cmd: python run_experiment.py timing --method binsearch_robust --games 
-      data/games/timing_n5.npz --out-csv results/timing/binsearch_robust_n5.csv 
-      --out-npz results/timing/binsearch_robust_n5.npz
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n5.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n5.csv --out_npz 
+      results/timing/binsearch_robust_n5.npz
     deps:
     - path: data/games/timing_n5.npz
       hash: md5
-      md5: 0758c9bda32440a20d75a9f204d0b65f
-      size: 1010
+      md5: e71c5bf96dacddc45f01eb593ac65fea
+      size: 2558
     - path: deceiver_binary_search.py
       hash: md5
-      md5: d1551762634f00d634c8360513658828
-      size: 5188
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
     - path: deception.py
       hash: md5
-      md5: 7983923168d36a97610dc3a57a03d885
-      size: 1154
-    - path: experiments.py
-      hash: md5
-      md5: 0b3e4ca292dfa22598df366a3ea97278
-      size: 3563
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
     - path: methods.py
       hash: md5
-      md5: 91f1e22af55cd1c6c5b5e3c90eb1f48a
-      size: 2550
-    - path: run_experiment.py
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
       hash: md5
-      md5: 498c705cfd442ee61ed800cfbf5a500e
-      size: 7518
-    - path: seeding.py
-      hash: md5
-      md5: 4531af8dd5e0106b2287a9eda3728a61
-      size: 2349
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
     - path: zs_game.py
       hash: md5
-      md5: b2608cf7052707a3b52682bb437dd952
-      size: 6532
-    params:
-      params.yaml:
-        sanity_check: false
-        solver:
-          binsearch_dv: 0.001
-          nonconvex_time_limit: 10
-          nonconvex_mip_gap: 0.01
-          gurobi_seed: 0
-          gurobi_threads: 0
-        timing.budget: 3.0
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
     outs:
     - path: results/timing/binsearch_robust_n5.csv
       hash: md5
-      md5: 0adefd1a64b9f62ad41df8201016d92a
-      size: 442
+      md5: 3ad17928e3f1934d4c75e6c0135a147a
+      size: 1632
     - path: results/timing/binsearch_robust_n5.npz
       hash: md5
-      md5: a5ff96380bd728794e6529a3823d3022
-      size: 1353
+      md5: 58fc60628a936d4ac005dac85de4ff0a
+      size: 3321
+  sample_timing_games@6:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 6 --num_cols 6 --out data/games/timing_n6.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n6.npz
+      hash: md5
+      md5: 626bb6a386e8d65bf966dc51ecfe3c14
+      size: 3403
+  sample_timing_games@7:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 7 --num_cols 7 --out data/games/timing_n7.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n7.npz
+      hash: md5
+      md5: 1ade5e28445c55e616982c1655916a93
+      size: 4398
+  sample_timing_games@8:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 8 --num_cols 8 --out data/games/timing_n8.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n8.npz
+      hash: md5
+      md5: dfb2c613c8ea59591c6c171d0005f7a8
+      size: 5548
+  sample_timing_games@9:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 9 --num_cols 9 --out data/games/timing_n9.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n9.npz
+      hash: md5
+      md5: 73d71e0715c0d2f77487e389a2d64465
+      size: 6852
+  sample_timing_games@10:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 10 --num_cols 10 --out data/games/timing_n10.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n10.npz
+      hash: md5
+      md5: 0229191b4a85e2772d827f3b04613080
+      size: 8319
+  sample_timing_games@11:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 11 --num_cols 11 --out data/games/timing_n11.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n11.npz
+      hash: md5
+      md5: 99b07dfe57c0cc986412f6198737581a
+      size: 9944
+  sample_timing_games@12:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 12 --num_cols 12 --out data/games/timing_n12.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n12.npz
+      hash: md5
+      md5: 864b5a1d2d5cd20c5eeea409a1319c9e
+      size: 11705
+  sample_timing_games@13:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 13 --num_cols 13 --out data/games/timing_n13.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n13.npz
+      hash: md5
+      md5: 687ba57d2063e731581cf983421615d4
+      size: 13621
+  sample_timing_games@14:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 14 --num_cols 14 --out data/games/timing_n14.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n14.npz
+      hash: md5
+      md5: a85d93917ce0c07d697cf96371e8088d
+      size: 15695
+  sample_timing_games@15:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 15 --num_cols 15 --out data/games/timing_n15.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n15.npz
+      hash: md5
+      md5: 4a45bad836b59518cf0c02e59f9f9b52
+      size: 17969
+  sample_rps_game:
+    cmd: python sampling.py --num_rows 3 --num_cols 3 --outcomes 0.0 1.0 -1.0 
+      -1.0 0.0 1.0 1.0 -1.0 0.0 --out data/games/rps.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/rps.npz
+      hash: md5
+      md5: 0da38a143b678b347b0706c31830bb37
+      size: 587
+  timing_binsearch@6:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n6.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n6.csv --out_npz 
+      results/timing/binsearch_robust_n6.npz
+    deps:
+    - path: data/games/timing_n6.npz
+      hash: md5
+      md5: 626bb6a386e8d65bf966dc51ecfe3c14
+      size: 3403
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n6.csv
+      hash: md5
+      md5: 2f32338a4a60b1d30ceba95e52e0915f
+      size: 1626
+    - path: results/timing/binsearch_robust_n6.npz
+      hash: md5
+      md5: 569fcb7c14f1af090ecf9db3bcc0c719
+      size: 4274
+  timing_binsearch@7:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n7.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n7.csv --out_npz 
+      results/timing/binsearch_robust_n7.npz
+    deps:
+    - path: data/games/timing_n7.npz
+      hash: md5
+      md5: 1ade5e28445c55e616982c1655916a93
+      size: 4398
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n7.csv
+      hash: md5
+      md5: 33ac2c4922bb45e5d61d10673e469c4c
+      size: 1633
+    - path: results/timing/binsearch_robust_n7.npz
+      hash: md5
+      md5: 0af24acaf30f9c491c5ed6ec7cb0fd1d
+      size: 5273
+  timing_binsearch@8:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n8.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n8.csv --out_npz 
+      results/timing/binsearch_robust_n8.npz
+    deps:
+    - path: data/games/timing_n8.npz
+      hash: md5
+      md5: dfb2c613c8ea59591c6c171d0005f7a8
+      size: 5548
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n8.csv
+      hash: md5
+      md5: 1ca5f6657dc6c3501c53b2c6a0c44f5e
+      size: 1620
+    - path: results/timing/binsearch_robust_n8.npz
+      hash: md5
+      md5: a3cbbc65f543b3aeb24dacd180d3c93d
+      size: 6639
+  timing_binsearch@9:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n9.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n9.csv --out_npz 
+      results/timing/binsearch_robust_n9.npz
+    deps:
+    - path: data/games/timing_n9.npz
+      hash: md5
+      md5: 73d71e0715c0d2f77487e389a2d64465
+      size: 6852
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n9.csv
+      hash: md5
+      md5: a8e55ff0139a9f33ee615ee586cce7b6
+      size: 1631
+    - path: results/timing/binsearch_robust_n9.npz
+      hash: md5
+      md5: e381e44b2a3ff9419c067eb6cb9d8414
+      size: 7962
+  timing_binsearch@10:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n10.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n10.csv --out_npz 
+      results/timing/binsearch_robust_n10.npz
+    deps:
+    - path: data/games/timing_n10.npz
+      hash: md5
+      md5: 0229191b4a85e2772d827f3b04613080
+      size: 8319
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n10.csv
+      hash: md5
+      md5: 4c2a3036e09e5c6e187cf99df8327e08
+      size: 1661
+    - path: results/timing/binsearch_robust_n10.npz
+      hash: md5
+      md5: 569315e3470e084aa28d472b89b360cd
+      size: 9533
+  timing_binsearch@11:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n11.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n11.csv --out_npz 
+      results/timing/binsearch_robust_n11.npz
+    deps:
+    - path: data/games/timing_n11.npz
+      hash: md5
+      md5: 99b07dfe57c0cc986412f6198737581a
+      size: 9944
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n11.csv
+      hash: md5
+      md5: 6364b219ebfec88b1bb581c8732eade6
+      size: 1666
+    - path: results/timing/binsearch_robust_n11.npz
+      hash: md5
+      md5: fb07d218b00222bb56423328c2b5ad6f
+      size: 11247
+  timing_binsearch@12:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n12.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n12.csv --out_npz 
+      results/timing/binsearch_robust_n12.npz
+    deps:
+    - path: data/games/timing_n12.npz
+      hash: md5
+      md5: 864b5a1d2d5cd20c5eeea409a1319c9e
+      size: 11705
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n12.csv
+      hash: md5
+      md5: dac9b024313b8edfb22204418ed4c9a1
+      size: 1651
+    - path: results/timing/binsearch_robust_n12.npz
+      hash: md5
+      md5: 46df279e08246d36486e276593622455
+      size: 13048
+  timing_binsearch@13:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n13.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n13.csv --out_npz 
+      results/timing/binsearch_robust_n13.npz
+    deps:
+    - path: data/games/timing_n13.npz
+      hash: md5
+      md5: 687ba57d2063e731581cf983421615d4
+      size: 13621
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n13.csv
+      hash: md5
+      md5: a76eca7871c48ebc739390f79adde612
+      size: 1664
+    - path: results/timing/binsearch_robust_n13.npz
+      hash: md5
+      md5: 9593d22549677ebf33f2305b5957d0f1
+      size: 15082
+  timing_binsearch@14:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n14.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n14.csv --out_npz 
+      results/timing/binsearch_robust_n14.npz
+    deps:
+    - path: data/games/timing_n14.npz
+      hash: md5
+      md5: a85d93917ce0c07d697cf96371e8088d
+      size: 15695
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n14.csv
+      hash: md5
+      md5: ae5d71bd5c9ea4ec2bd66465115d625c
+      size: 1660
+    - path: results/timing/binsearch_robust_n14.npz
+      hash: md5
+      md5: dc259e2d6d0e55e323f459f4860d16ea
+      size: 17111
+  timing_binsearch@15:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n15.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n15.csv --out_npz 
+      results/timing/binsearch_robust_n15.npz
+    deps:
+    - path: data/games/timing_n15.npz
+      hash: md5
+      md5: 4a45bad836b59518cf0c02e59f9f9b52
+      size: 17969
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n15.csv
+      hash: md5
+      md5: a4a5b4a0203633e39d70bdbbc4c7669f
+      size: 1665
+    - path: results/timing/binsearch_robust_n15.npz
+      hash: md5
+      md5: d2cfc2ed442c8a661a0433698ca0f47f
+      size: 19434
+  timing_nonconvex@4:
+    cmd: python deception.py --label timing --method nonconvex --games 
+      data/games/timing_n4.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --time_limit 300.0 
+      --out_csv results/timing/nonconvex_n4.csv --out_npz 
+      results/timing/nonconvex_n4.npz
+    deps:
+    - path: data/games/timing_n4.npz
+      hash: md5
+      md5: aae72c59467eab909a9163bd7297a926
+      size: 1866
+    - path: deceiver_nonconvex.py
+      hash: md5
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/nonconvex_n4.csv
+      hash: md5
+      md5: ee3729a7f7c6af21c9a40a02b819be8e
+      size: 1437
+    - path: results/timing/nonconvex_n4.npz
+      hash: md5
+      md5: 2e40bb0d2c5f47abe78ff5294337ff34
+      size: 2823
+  timing_nonconvex@5:
+    cmd: python deception.py --label timing --method nonconvex --games 
+      data/games/timing_n5.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --time_limit 300.0 
+      --out_csv results/timing/nonconvex_n5.csv --out_npz 
+      results/timing/nonconvex_n5.npz
+    deps:
+    - path: data/games/timing_n5.npz
+      hash: md5
+      md5: e71c5bf96dacddc45f01eb593ac65fea
+      size: 2558
+    - path: deceiver_nonconvex.py
+      hash: md5
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/nonconvex_n5.csv
+      hash: md5
+      md5: 2b7e7251596ec619921b0210f2099288
+      size: 1426
+    - path: results/timing/nonconvex_n5.npz
+      hash: md5
+      md5: 5eeb0ee4ab4d9a1a6083871e28eb84e6
+      size: 3458
+  timing_nonconvex@6:
+    cmd: python deception.py --label timing --method nonconvex --games 
+      data/games/timing_n6.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --time_limit 300.0 
+      --out_csv results/timing/nonconvex_n6.csv --out_npz 
+      results/timing/nonconvex_n6.npz
+    deps:
+    - path: data/games/timing_n6.npz
+      hash: md5
+      md5: 626bb6a386e8d65bf966dc51ecfe3c14
+      size: 3403
+    - path: deceiver_nonconvex.py
+      hash: md5
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/nonconvex_n6.csv
+      hash: md5
+      md5: c62995942495516853fe5ab67053ee73
+      size: 1416
+    - path: results/timing/nonconvex_n6.npz
+      hash: md5
+      md5: 30b1e32172e8706add9e8bed1fdd691b
+      size: 4795
+  timing_nonconvex@7:
+    cmd: python deception.py --label timing --method nonconvex --games 
+      data/games/timing_n7.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --time_limit 300.0 
+      --out_csv results/timing/nonconvex_n7.csv --out_npz 
+      results/timing/nonconvex_n7.npz
+    deps:
+    - path: data/games/timing_n7.npz
+      hash: md5
+      md5: 1ade5e28445c55e616982c1655916a93
+      size: 4398
+    - path: deceiver_nonconvex.py
+      hash: md5
+      md5: 033a537fb87353428ac90554a91724f1
+      size: 4715
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/nonconvex_n7.csv
+      hash: md5
+      md5: 23b10011277c53c871f1235e4493f936
+      size: 1421
+    - path: results/timing/nonconvex_n7.npz
+      hash: md5
+      md5: cf30dd9a5915f19d5da0410d05d7cd75
+      size: 6075
+  tolerance@binsearch_robust-0.027826:
+    cmd: python deception.py --label tolerance --method binsearch_robust --games
+      data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.027826 --out_csv 
+      results/tolerance/binsearch_robust_dv0.027826.csv --out_npz 
+      results/tolerance/binsearch_robust_dv0.027826.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_robust_dv0.027826.csv
+      hash: md5
+      md5: 816d82a1d36e20d88f713b4c0cee1a56
+      size: 15730
+    - path: results/tolerance/binsearch_robust_dv0.027826.npz
+      hash: md5
+      md5: eb0911359d244ed4a83d0cbc38adf902
+      size: 24995
+  tolerance@binsearch_robust-0.0077426:
+    cmd: python deception.py --label tolerance --method binsearch_robust --games
+      data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.0077426 --out_csv 
+      results/tolerance/binsearch_robust_dv0.0077426.csv --out_npz 
+      results/tolerance/binsearch_robust_dv0.0077426.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_robust_dv0.0077426.csv
+      hash: md5
+      md5: 904f26ef8e7271f47d067667bc5d67ec
+      size: 15834
+    - path: results/tolerance/binsearch_robust_dv0.0077426.npz
+      hash: md5
+      md5: baf4b2a121549080e3b7e2c1e4d77fc8
+      size: 25016
+  tolerance@binsearch_robust-0.0021544:
+    cmd: python deception.py --label tolerance --method binsearch_robust --games
+      data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.0021544 --out_csv 
+      results/tolerance/binsearch_robust_dv0.0021544.csv --out_npz 
+      results/tolerance/binsearch_robust_dv0.0021544.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_robust_dv0.0021544.csv
+      hash: md5
+      md5: 38b3abe894c07bb5d6588a4fd69cf284
+      size: 15833
+    - path: results/tolerance/binsearch_robust_dv0.0021544.npz
+      hash: md5
+      md5: 8e2f0d6f988e6f006e68497e23c53597
+      size: 25041
+  tolerance@binsearch_robust-0.00059948:
+    cmd: python deception.py --label tolerance --method binsearch_robust --games
+      data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.00059948 --out_csv
+      results/tolerance/binsearch_robust_dv0.00059948.csv --out_npz 
+      results/tolerance/binsearch_robust_dv0.00059948.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_robust_dv0.00059948.csv
+      hash: md5
+      md5: ba2c75d6bcd09d37d27b7b3f66a7dab8
+      size: 15943
+    - path: results/tolerance/binsearch_robust_dv0.00059948.npz
+      hash: md5
+      md5: ad7705389e9c3e3ff7fbbddabc982c67
+      size: 25037
+  tolerance@binsearch_robust-0.00016681:
+    cmd: python deception.py --label tolerance --method binsearch_robust --games
+      data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.00016681 --out_csv
+      results/tolerance/binsearch_robust_dv0.00016681.csv --out_npz 
+      results/tolerance/binsearch_robust_dv0.00016681.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_robust_dv0.00016681.csv
+      hash: md5
+      md5: 15403d8772fb7cad05e796ff5f0488ee
+      size: 15905
+    - path: results/tolerance/binsearch_robust_dv0.00016681.npz
+      hash: md5
+      md5: d32f6c9943f300a674f0c3fd06e06c7c
+      size: 25040
+  tolerance@binsearch_robust-4.6416e-05:
+    cmd: python deception.py --label tolerance --method binsearch_robust --games
+      data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 4.6416e-05 --out_csv
+      results/tolerance/binsearch_robust_dv4.6416e-05.csv --out_npz 
+      results/tolerance/binsearch_robust_dv4.6416e-05.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_robust_dv4.6416e-05.csv
+      hash: md5
+      md5: b9ab2311dc6202570fe652bf962a6d7f
+      size: 15897
+    - path: results/tolerance/binsearch_robust_dv4.6416e-05.npz
+      hash: md5
+      md5: 07fa3b7198bbf23dc16b1767273e471b
+      size: 25061
+  tolerance@binsearch_robust-1.2915e-05:
+    cmd: python deception.py --label tolerance --method binsearch_robust --games
+      data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 1.2915e-05 --out_csv
+      results/tolerance/binsearch_robust_dv1.2915e-05.csv --out_npz 
+      results/tolerance/binsearch_robust_dv1.2915e-05.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_robust_dv1.2915e-05.csv
+      hash: md5
+      md5: b2f40ba4d354b7f32fbbb52f4a3d6b9b
+      size: 15897
+    - path: results/tolerance/binsearch_robust_dv1.2915e-05.npz
+      hash: md5
+      md5: 75d1a1bdf789d4ae4ae93d5764c4e824
+      size: 25075
+  tolerance@binsearch_robust-3.5938e-06:
+    cmd: python deception.py --label tolerance --method binsearch_robust --games
+      data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 3.5938e-06 --out_csv
+      results/tolerance/binsearch_robust_dv3.5938e-06.csv --out_npz 
+      results/tolerance/binsearch_robust_dv3.5938e-06.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_robust_dv3.5938e-06.csv
+      hash: md5
+      md5: 280a1d7dc043b55200a84fc45c13afd3
+      size: 15907
+    - path: results/tolerance/binsearch_robust_dv3.5938e-06.npz
+      hash: md5
+      md5: a44bcfc7720f877794c8b853eeff916f
+      size: 25091
+  tolerance@binsearch_robust-1e-06:
+    cmd: python deception.py --label tolerance --method binsearch_robust --games
+      data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 1e-06 --out_csv 
+      results/tolerance/binsearch_robust_dv1e-06.csv --out_npz 
+      results/tolerance/binsearch_robust_dv1e-06.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_robust_dv1e-06.csv
+      hash: md5
+      md5: 2d09bdbc703018421c0d3c52f681c924
+      size: 15399
+    - path: results/tolerance/binsearch_robust_dv1e-06.npz
+      hash: md5
+      md5: 71cb146e6ec7d285923f9b663c1ee602
+      size: 25053
+  tolerance@binsearch_nonrobust-0.027826:
+    cmd: python deception.py --label tolerance --method binsearch_nonrobust 
+      --games data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 
+      0.01 --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.027826 
+      --out_csv results/tolerance/binsearch_nonrobust_dv0.027826.csv --out_npz 
+      results/tolerance/binsearch_nonrobust_dv0.027826.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_nonrobust_dv0.027826.csv
+      hash: md5
+      md5: 443fadf4512f1214ac26dfd9abc95797
+      size: 16439
+    - path: results/tolerance/binsearch_nonrobust_dv0.027826.npz
+      hash: md5
+      md5: 3a36273a6f1cf3067a76312c1ab91210
+      size: 25003
+  tolerance@binsearch_nonrobust-0.0077426:
+    cmd: python deception.py --label tolerance --method binsearch_nonrobust 
+      --games data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 
+      0.01 --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.0077426 
+      --out_csv results/tolerance/binsearch_nonrobust_dv0.0077426.csv --out_npz 
+      results/tolerance/binsearch_nonrobust_dv0.0077426.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_nonrobust_dv0.0077426.csv
+      hash: md5
+      md5: 16e5e605d3d788bfb5b9af000d971a85
+      size: 16547
+    - path: results/tolerance/binsearch_nonrobust_dv0.0077426.npz
+      hash: md5
+      md5: f10163f50d2e82384f013b0d213bfcc2
+      size: 25043
+  tolerance@binsearch_nonrobust-0.0021544:
+    cmd: python deception.py --label tolerance --method binsearch_nonrobust 
+      --games data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 
+      0.01 --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.0021544 
+      --out_csv results/tolerance/binsearch_nonrobust_dv0.0021544.csv --out_npz 
+      results/tolerance/binsearch_nonrobust_dv0.0021544.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_nonrobust_dv0.0021544.csv
+      hash: md5
+      md5: 2c58c5a66f9defaba1c068459d65b213
+      size: 16536
+    - path: results/tolerance/binsearch_nonrobust_dv0.0021544.npz
+      hash: md5
+      md5: b5cb9a798c06dd7c5e179c530d041bb7
+      size: 25076
+  tolerance@binsearch_nonrobust-0.00059948:
+    cmd: python deception.py --label tolerance --method binsearch_nonrobust 
+      --games data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 
+      0.01 --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.00059948 
+      --out_csv results/tolerance/binsearch_nonrobust_dv0.00059948.csv --out_npz
+      results/tolerance/binsearch_nonrobust_dv0.00059948.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_nonrobust_dv0.00059948.csv
+      hash: md5
+      md5: b921de9c689d1ac932554ccf11c43c63
+      size: 16642
+    - path: results/tolerance/binsearch_nonrobust_dv0.00059948.npz
+      hash: md5
+      md5: a4e50171c4b6089a1dc7545329e998ba
+      size: 25075
+  tolerance@binsearch_nonrobust-0.00016681:
+    cmd: python deception.py --label tolerance --method binsearch_nonrobust 
+      --games data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 
+      0.01 --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 0.00016681 
+      --out_csv results/tolerance/binsearch_nonrobust_dv0.00016681.csv --out_npz
+      results/tolerance/binsearch_nonrobust_dv0.00016681.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_nonrobust_dv0.00016681.csv
+      hash: md5
+      md5: 30bfba564de669db6ca45c1352d09f8a
+      size: 16594
+    - path: results/tolerance/binsearch_nonrobust_dv0.00016681.npz
+      hash: md5
+      md5: 227a75958e849c6fd0612f21cb629ece
+      size: 25084
+  tolerance@binsearch_nonrobust-4.6416e-05:
+    cmd: python deception.py --label tolerance --method binsearch_nonrobust 
+      --games data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 
+      0.01 --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 4.6416e-05 
+      --out_csv results/tolerance/binsearch_nonrobust_dv4.6416e-05.csv --out_npz
+      results/tolerance/binsearch_nonrobust_dv4.6416e-05.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_nonrobust_dv4.6416e-05.csv
+      hash: md5
+      md5: 32669b9d1910143547348da3d9c39db1
+      size: 16594
+    - path: results/tolerance/binsearch_nonrobust_dv4.6416e-05.npz
+      hash: md5
+      md5: badb63d6763016a4e7ccc4b11652921f
+      size: 25086
+  tolerance@binsearch_nonrobust-1.2915e-05:
+    cmd: python deception.py --label tolerance --method binsearch_nonrobust 
+      --games data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 
+      0.01 --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 1.2915e-05 
+      --out_csv results/tolerance/binsearch_nonrobust_dv1.2915e-05.csv --out_npz
+      results/tolerance/binsearch_nonrobust_dv1.2915e-05.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_nonrobust_dv1.2915e-05.csv
+      hash: md5
+      md5: a66cc6a19cf0914ea9f04711ffb9ab4f
+      size: 16619
+    - path: results/tolerance/binsearch_nonrobust_dv1.2915e-05.npz
+      hash: md5
+      md5: 6a61153ad38846231baae74ad0615b88
+      size: 25062
+  tolerance@binsearch_nonrobust-3.5938e-06:
+    cmd: python deception.py --label tolerance --method binsearch_nonrobust 
+      --games data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 
+      0.01 --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 3.5938e-06 
+      --out_csv results/tolerance/binsearch_nonrobust_dv3.5938e-06.csv --out_npz
+      results/tolerance/binsearch_nonrobust_dv3.5938e-06.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_nonrobust_dv3.5938e-06.csv
+      hash: md5
+      md5: 028b5fec8da3582b650280c82dd16ac3
+      size: 16606
+    - path: results/tolerance/binsearch_nonrobust_dv3.5938e-06.npz
+      hash: md5
+      md5: ec2ecf93f9e660af0b4cfe7e958ec9fb
+      size: 25095
+  tolerance@binsearch_nonrobust-1e-06:
+    cmd: python deception.py --label tolerance --method binsearch_nonrobust 
+      --games data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 
+      0.01 --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --dv 1e-06 --out_csv
+      results/tolerance/binsearch_nonrobust_dv1e-06.csv --out_npz 
+      results/tolerance/binsearch_nonrobust_dv1e-06.npz
+    deps:
+    - path: data/games/tolerance.npz
+      hash: md5
+      md5: f7ea5a84c2acae68019f5184876b4e53
+      size: 19917
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 3544f4cbeffbf3834c371af97fecab2c
+      size: 5065
+    - path: methods.py
+      hash: md5
+      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
+      size: 3767
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/tolerance/binsearch_nonrobust_dv1e-06.csv
+      hash: md5
+      md5: f0dbaf9eeff5116117c10e8bc6a55c07
+      size: 16105
+    - path: results/tolerance/binsearch_nonrobust_dv1e-06.npz
+      hash: md5
+      md5: 9affa51934b2b6042eccdcd2581fcbb7
+      size: 25083

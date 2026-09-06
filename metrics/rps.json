@@ -1,21 +1,21 @@
 {
-  "num_results": 6,
+  "num_results": 20,
   "methods": {
     "binsearch_robust": {
-      "num_results": 3,
-      "computation_time_mean": 0.014152376665151635,
-      "computation_time_std": 0.0013823500970266591,
-      "computation_time_max": 0.0157447499950649,
-      "improvement_mean": 0.6661783854166666,
-      "improvement_std": 0.3007109258440519
+      "num_results": 10,
+      "computation_time_mean": 0.011957061999964878,
+      "computation_time_std": 0.0006378307823798597,
+      "computation_time_max": 0.0134955149999314,
+      "improvement_mean": 0.6711288310546875,
+      "improvement_std": 0.3028854130637521
     },
     "nonconvex": {
-      "num_results": 3,
-      "computation_time_mean": 0.5227216800024811,
-      "computation_time_std": 0.8509724137568637,
-      "computation_time_max": 1.505311144006555,
-      "improvement_mean": 0.6944455190954842,
-      "improvement_std": 0.336787922939492
+      "num_results": 10,
+      "computation_time_mean": 0.06894423179999193,
+      "computation_time_std": 0.1448989093014066,
+      "computation_time_max": 0.4801005440001518,
+      "improvement_mean": 0.7253710409553502,
+      "improvement_std": 0.34364311222545474
     }
   }
 }
