@@ -6,39 +6,39 @@ stages:
     deps:
     - path: sampling.py
       hash: md5
-      md5: 5a5ff39f5dda28a44e4630017c2de51b
-      size: 3938
+      md5: a15782314ad89d9c82a0312067d0fdf6
+      size: 4333
     outs:
     - path: data/games/compare.npz
       hash: md5
-      md5: 7d903a242e309ebb07bfb224694a414c
-      size: 1598
+      md5: 6d960ec28fb5867361a0411c1f98e9c4
+      size: 1596
   sample_timing_games@2:
     cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
       --num_rows 2 --num_cols 2 --out data/games/timing_n2.npz
     deps:
     - path: sampling.py
       hash: md5
-      md5: 5a5ff39f5dda28a44e4630017c2de51b
-      size: 3938
+      md5: a15782314ad89d9c82a0312067d0fdf6
+      size: 4333
     outs:
     - path: data/games/timing_n2.npz
       hash: md5
-      md5: 516ff065207773990cdc6b22947dc47c
-      size: 911
+      md5: a3f78e04b3432efd6ee60c204da7a5ef
+      size: 912
   sample_timing_games@3:
     cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
       --num_rows 3 --num_cols 3 --out data/games/timing_n3.npz
     deps:
     - path: sampling.py
       hash: md5
-      md5: 5a5ff39f5dda28a44e4630017c2de51b
-      size: 3938
+      md5: a15782314ad89d9c82a0312067d0fdf6
+      size: 4333
     outs:
     - path: data/games/timing_n3.npz
       hash: md5
-      md5: 5998169d5f81bf6a26f4b5f5264f6df5
-      size: 1329
+      md5: 1155bdbb699a4585a6b596bd28cc147e
+      size: 1325
   sample_tolerance_games:
     cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 100 
       --num_rows 5 --num_cols 5 --out data/games/tolerance.npz
@@ -713,13 +713,13 @@ stages:
     deps:
     - path: sampling.py
       hash: md5
-      md5: 5a5ff39f5dda28a44e4630017c2de51b
-      size: 3938
+      md5: a15782314ad89d9c82a0312067d0fdf6
+      size: 4333
     outs:
     - path: data/games/timing_n4.npz
       hash: md5
-      md5: aae72c59467eab909a9163bd7297a926
-      size: 1866
+      md5: 38e1ca770a5ffc82ac987a731ca2e091
+      size: 1872
   timing_binsearch@4:
     cmd: python deception.py --label timing --method binsearch_robust --games 
       data/games/timing_n4.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
@@ -766,13 +766,13 @@ stages:
     deps:
     - path: sampling.py
       hash: md5
-      md5: 5a5ff39f5dda28a44e4630017c2de51b
-      size: 3938
+      md5: a15782314ad89d9c82a0312067d0fdf6
+      size: 4333
     outs:
     - path: data/games/timing_n5.npz
       hash: md5
-      md5: e71c5bf96dacddc45f01eb593ac65fea
-      size: 2558
+      md5: 5b8ad31205e6f2a981a56ab2dafd0413
+      size: 2560
   timing_binsearch@5:
     cmd: python deception.py --label timing --method binsearch_robust --games 
       data/games/timing_n5.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
