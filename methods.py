@@ -20,6 +20,9 @@ class DeceptionResult:
     victim_strategy: FArray
     honest_value: float
     obtained_value: float
+    # True if the solver stopped on its time limit, so the result is only the best
+    # incumbent found and the timing is a lower bound.
+    truncated: bool = False
 
 
 Solver = Callable[[ZSGame, float], DeceptionResult]

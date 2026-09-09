@@ -148,6 +148,7 @@ def deception_nonconvex(
         victim_strategy=y_sol,
         honest_value=honest_value,
         obtained_value=achieved_value,
+        truncated=m.Status == GRB.TIME_LIMIT,
     )
 
     return best_dr

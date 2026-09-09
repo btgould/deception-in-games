@@ -1,21 +1,26 @@
 {
   "num_results": 2000,
+  "num_truncated": 0,
   "methods": {
     "binsearch_nonrobust": {
       "num_results": 1000,
-      "computation_time_mean": 0.031220369019000552,
-      "computation_time_std": 0.009190886709472547,
-      "computation_time_max": 0.0477274859999852,
+      "computation_time_mean": 0.03189886725201173,
+      "computation_time_std": 0.009048952394586038,
+      "computation_time_max": 0.0478852650003318,
       "improvement_mean": 0.8970505081006195,
-      "improvement_std": 0.4532821927295524
+      "improvement_std": 0.4532821927295524,
+      "num_truncated": 0,
+      "truncated_by_size": {}
     },
     "binsearch_robust": {
       "num_results": 1000,
-      "computation_time_mean": 0.03183174469600039,
-      "computation_time_std": 0.008153362763018599,
-      "computation_time_max": 0.047859002999985,
+      "computation_time_mean": 0.03221677101198743,
+      "computation_time_std": 0.009296420159488597,
+      "computation_time_max": 0.0469550379993961,
       "improvement_mean": 0.0965506655006224,
-      "improvement_std": 1.6281165828576694
+      "improvement_std": 1.6281165828576694,
+      "num_truncated": 0,
+      "truncated_by_size": {}
     }
   }
 }

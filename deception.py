@@ -30,6 +30,7 @@ COLUMNS = [
     "obtained_value",
     "improvement",
     "computation_time",
+    "truncated",
 ]
 
 ARRAY_KEYS = ["games", "deception", "deceiver_strategy", "victim_strategy"]
@@ -96,6 +97,7 @@ def run_batch(
                     "obtained_value": dr.obtained_value,
                     "improvement": dr.honest_value - dr.obtained_value,
                     "computation_time": computation_time,
+                    "truncated": dr.truncated,
                 }
             )
 

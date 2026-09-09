@@ -19,10 +19,18 @@ def collect(inputs: str) -> pd.DataFrame:
     return df.sort_values(SORT_KEYS, kind="stable").reset_index(drop=True)
 
 
+def _truncated_by_size(group: pd.DataFrame) -> dict[str, int]:
+    """Counts time-limit-truncated solves per square game size, omitting clean sizes."""
+    sized = group.dropna(subset=["size"])
+    counts = sized.groupby("size")["truncated"].sum()
+    return {str(int(size)): int(n) for size, n in counts.items() if n}
+
+
 def summarize(df: pd.DataFrame) -> dict:
     """Per-method timing and improvement summary, reported as DVC metrics."""
     return {
         "num_results": len(df),
+        "num_truncated": int(df["truncated"].sum()),
         "methods": {
             str(method): {
                 "num_results": len(group),
@@ -31,6 +39,8 @@ def summarize(df: pd.DataFrame) -> dict:
                 "computation_time_max": float(group["computation_time"].max()),
                 "improvement_mean": float(group["improvement"].mean()),
                 "improvement_std": float(group["improvement"].std()),
+                "num_truncated": int(group["truncated"].sum()),
+                "truncated_by_size": _truncated_by_size(group),
             }
             for method, group in df.groupby("method")
         },

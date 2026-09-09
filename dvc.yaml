@@ -77,7 +77,7 @@ stages:
 
   # ------------------------------------------------ computation time vs game size
   # Split by solver rather than swept as one matrix because the nonconvex solver
-  # only runs up to 7x7 and `matrix` has no filtering.
+  # only runs up to 10x10 and `matrix` has no filtering.
   timing_binsearch:
     matrix:
       size: ${timing.sizes}
@@ -209,11 +209,11 @@ plots:
       title: Improvement vs Deception Budget
 
   - results/timing.csv:
-      template: line_log_y
+      template: median_band_log_y
       x: size
       y: computation_time
       x_label: Game size (n x n)
-      y_label: Mean computation time (s)
+      y_label: Computation time (s)
       title: Computation Time vs Game Size
 
   - results/tolerance.csv:

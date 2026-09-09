@@ -69,16 +69,16 @@ stages:
       size: 5172
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -90,8 +90,8 @@ stages:
     outs:
     - path: results/compare/nonconvex.csv
       hash: md5
-      md5: 16ee280828ddaa71ecf944adcbdce18b
-      size: 3349
+      md5: 6d2a083e857a34d3bff211759536fb2e
+      size: 3508
     - path: results/compare/nonconvex.npz
       hash: md5
       md5: 6eede7a7e2ef3af486fccda45e137c2f
@@ -113,16 +113,16 @@ stages:
       size: 5172
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -134,8 +134,8 @@ stages:
     outs:
     - path: results/compare/binsearch_robust.csv
       hash: md5
-      md5: 94b2e300f11557646525669ca05293cf
-      size: 3888
+      md5: 28f7acee9b464863da46ba09c0600eb9
+      size: 4043
     - path: results/compare/binsearch_robust.npz
       hash: md5
       md5: 5bc310ac929a2c2ada19dd62fec95e19
@@ -157,16 +157,16 @@ stages:
       size: 5172
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -178,8 +178,8 @@ stages:
     outs:
     - path: results/compare/binsearch_nonrobust.csv
       hash: md5
-      md5: 96fc999b0fddda333325d104fabe90cc
-      size: 4073
+      md5: 0c421bfc5f0784d6ff4e2ff431cb2ebc
+      size: 4238
     - path: results/compare/binsearch_nonrobust.npz
       hash: md5
       md5: bd2b0d29e8a041cfc39c8edb305c6e57
@@ -190,22 +190,22 @@ stages:
     deps:
     - path: analysis.py
       hash: md5
-      md5: a7f566f1435deceac7429ccb8809f55d
-      size: 1970
+      md5: c8c90b0f1d1b24dcaacbdfbc223e319f
+      size: 2472
     - path: results/compare
       hash: md5
-      md5: 637de1fa50f322ad096e3ef219764be9.dir
-      size: 22071
+      md5: 670cd92130d0180bf9bf3fe35b353b1a.dir
+      size: 22550
       nfiles: 7
     outs:
     - path: metrics/compare.json
       hash: md5
-      md5: 7d7f804fbddc2dcd7713a94cca37e9c1
-      size: 941
+      md5: ee48e8af074638325f755b6fd9993584
+      size: 1135
     - path: results/compare.csv
       hash: md5
-      md5: 208f0f738dc06594aa9d952d2949c5d0
-      size: 10847
+      md5: f6dd7933a1fee37fc980ca08811cbe93
+      size: 11303
   timing_binsearch@2:
     cmd: python deception.py --label timing --method binsearch_robust --games 
       data/games/timing_n2.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
@@ -223,12 +223,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -240,8 +240,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n2.csv
       hash: md5
-      md5: 908ee184d26f723f71679f9a8694d0cb
-      size: 1566
+      md5: 294d7f5bdfaf483d59dad21788d49d4b
+      size: 1635
     - path: results/timing/binsearch_robust_n2.npz
       hash: md5
       md5: c004ec7e9981193dbc4729d1cbabbb0b
@@ -263,12 +263,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -280,8 +280,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n3.csv
       hash: md5
-      md5: 32eedaa313cd1eea74672e4a693445cc
-      size: 1572
+      md5: b1896ecd68b1d8dfb08256990e04a8ff
+      size: 1644
     - path: results/timing/binsearch_robust_n3.npz
       hash: md5
       md5: 30856e899e543986f564233eb3755181
@@ -299,16 +299,16 @@ stages:
       size: 911
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -320,8 +320,8 @@ stages:
     outs:
     - path: results/timing/nonconvex_n2.csv
       hash: md5
-      md5: b824bb26503a91c4257ab7f0f50eacf1
-      size: 1446
+      md5: 8338a3167fef9756a838a220021e122a
+      size: 1514
     - path: results/timing/nonconvex_n2.npz
       hash: md5
       md5: 897865ebcb5da0978e4af2e93624cfba
@@ -339,16 +339,16 @@ stages:
       size: 1329
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -360,8 +360,8 @@ stages:
     outs:
     - path: results/timing/nonconvex_n3.csv
       hash: md5
-      md5: 38ea37992a4312ede8a65b2eb1024184
-      size: 1438
+      md5: 858bb5474c982fbfc0bcfec057edbc15
+      size: 1506
     - path: results/timing/nonconvex_n3.npz
       hash: md5
       md5: 9c13520645d51e6d1fa17ba897d77efd
@@ -372,22 +372,22 @@ stages:
     deps:
     - path: analysis.py
       hash: md5
-      md5: a7f566f1435deceac7429ccb8809f55d
-      size: 1970
+      md5: c8c90b0f1d1b24dcaacbdfbc223e319f
+      size: 2472
     - path: results/timing
       hash: md5
-      md5: 05b71a97e5cc7ec9269155d583d5ac23.dir
-      size: 171632
-      nfiles: 41
+      md5: 365e468fae871acee281a986c13313e5.dir
+      size: 350157
+      nfiles: 57
     outs:
     - path: metrics/timing.json
       hash: md5
-      md5: 93e4459661a50d959e63d9762ce3b9a6
-      size: 630
+      md5: 3ccaa5536adaee3ea9302a519642dae2
+      size: 824
     - path: results/timing.csv
       hash: md5
-      md5: b63767888b0711f88c42a99b2501155e
-      size: 28300
+      md5: 2851dc0ce7c445c4edd4a4b58dd4a928
+      size: 41300
   tolerance@binsearch_robust-0.1:
     cmd: python deception.py --label tolerance --method binsearch_robust --games
       data/games/tolerance.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
@@ -405,12 +405,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -422,8 +422,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_robust_dv0.1.csv
       hash: md5
-      md5: da0f3c05ebe7f634666ed58ff01813e9
-      size: 15213
+      md5: 86f36dec4ab3de049b66b66f46a81eee
+      size: 15836
     - path: results/tolerance/binsearch_robust_dv0.1.npz
       hash: md5
       md5: 92a100285f200187aec9992600670683
@@ -498,12 +498,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -515,8 +515,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv0.1.csv
       hash: md5
-      md5: 637d2ba5cfae8e9ba057917420b4718e
-      size: 15933
+      md5: 1d614b832d9eea51091e75776d4941b4
+      size: 16555
     - path: results/tolerance/binsearch_nonrobust_dv0.1.npz
       hash: md5
       md5: c635903238cc097fa74e951b741761ec
@@ -580,22 +580,22 @@ stages:
     deps:
     - path: analysis.py
       hash: md5
-      md5: a7f566f1435deceac7429ccb8809f55d
-      size: 1970
+      md5: c8c90b0f1d1b24dcaacbdfbc223e319f
+      size: 2472
     - path: results/tolerance
       hash: md5
-      md5: 60711a385269befa5221af18456716e4.dir
-      size: 824579
+      md5: efe375646a1d761b169ec35e89ef0f2e.dir
+      size: 836740
       nfiles: 41
     outs:
     - path: metrics/tolerance.json
       hash: md5
-      md5: 1337f215b2408ced2125b9b2238e7e8c
-      size: 655
+      md5: 9b47a2732fc6fff21144506076b6f78c
+      size: 791
     - path: results/tolerance.csv
       hash: md5
-      md5: 5e13cc0bfde4250ed6eadac7c9a0bbc7
-      size: 314842
+      md5: e096ecdf7684da9b3187b833507dd672
+      size: 326854
   rps@nonconvex:
     cmd: python deception.py --label rps --method nonconvex --games 
       data/games/rps.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
@@ -613,16 +613,16 @@ stages:
       size: 5172
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -634,8 +634,8 @@ stages:
     outs:
     - path: results/rps/nonconvex.csv
       hash: md5
-      md5: 31cd2cee2046c03ad897063bf4a7a416
-      size: 1139
+      md5: edd054bab6e65257eeb3f902b9b42da8
+      size: 1208
     - path: results/rps/nonconvex.npz
       hash: md5
       md5: d2875f6126e605141c39e94e80ae8b2d
@@ -658,16 +658,16 @@ stages:
       size: 5172
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -679,8 +679,8 @@ stages:
     outs:
     - path: results/rps/binsearch_robust.csv
       hash: md5
-      md5: 9a5526163b5d0c1d6f42132fcc90e66a
-      size: 1450
+      md5: c22f97203af22a68a6dc8c3d80d5d02d
+      size: 1518
     - path: results/rps/binsearch_robust.npz
       hash: md5
       md5: 68fd766b04aaeddcd3a0dc210accd902
@@ -691,22 +691,22 @@ stages:
     deps:
     - path: analysis.py
       hash: md5
-      md5: a7f566f1435deceac7429ccb8809f55d
-      size: 1970
+      md5: c8c90b0f1d1b24dcaacbdfbc223e319f
+      size: 2472
     - path: results/rps
       hash: md5
-      md5: d65eab42275aed97a4d40357eb8c5369.dir
-      size: 5076
+      md5: 8f21cb36951085fcfa2bd676fc026e8e.dir
+      size: 5213
       nfiles: 5
     outs:
     - path: metrics/rps.json
       hash: md5
-      md5: 799420678a8491cd2e192107689bd533
-      size: 640
+      md5: fac9332788465841058aa8f9a4534815
+      size: 776
     - path: results/rps.csv
       hash: md5
-      md5: 19a511d230370587953154e348cd3bb8
-      size: 2401
+      md5: 073808e86b24cdae1bdc28c41960b78e
+      size: 2529
   sample_timing_games@4:
     cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
       --num_rows 4 --num_cols 4 --out data/games/timing_n4.npz
@@ -737,12 +737,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -754,8 +754,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n4.csv
       hash: md5
-      md5: 915733111d39f85a880606b3388f5a97
-      size: 1626
+      md5: 8bfd28c282fe896db20e87e9f97cbf76
+      size: 1700
     - path: results/timing/binsearch_robust_n4.npz
       hash: md5
       md5: b4be576447efefe028ecc1e9c6f96c88
@@ -790,12 +790,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -807,8 +807,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n5.csv
       hash: md5
-      md5: 3ad17928e3f1934d4c75e6c0135a147a
-      size: 1632
+      md5: 5268ce3caed91cc3fcf3eb7290b82db7
+      size: 1700
     - path: results/timing/binsearch_robust_n5.npz
       hash: md5
       md5: 58fc60628a936d4ac005dac85de4ff0a
@@ -973,12 +973,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -990,8 +990,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n6.csv
       hash: md5
-      md5: 2f32338a4a60b1d30ceba95e52e0915f
-      size: 1626
+      md5: bb881bf9cb2206fef90634f4e49a98d9
+      size: 1694
     - path: results/timing/binsearch_robust_n6.npz
       hash: md5
       md5: 569fcb7c14f1af090ecf9db3bcc0c719
@@ -1013,12 +1013,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1030,8 +1030,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n7.csv
       hash: md5
-      md5: 33ac2c4922bb45e5d61d10673e469c4c
-      size: 1633
+      md5: a461a45a45829695be4b34426b94e416
+      size: 1701
     - path: results/timing/binsearch_robust_n7.npz
       hash: md5
       md5: 0af24acaf30f9c491c5ed6ec7cb0fd1d
@@ -1053,12 +1053,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1070,8 +1070,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n8.csv
       hash: md5
-      md5: 1ca5f6657dc6c3501c53b2c6a0c44f5e
-      size: 1620
+      md5: 2e99e7d4fc903ad8207b520ece0ba089
+      size: 1691
     - path: results/timing/binsearch_robust_n8.npz
       hash: md5
       md5: a3cbbc65f543b3aeb24dacd180d3c93d
@@ -1093,12 +1093,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1110,8 +1110,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n9.csv
       hash: md5
-      md5: a8e55ff0139a9f33ee615ee586cce7b6
-      size: 1631
+      md5: b5c60707805c5ffd9612f646022f114c
+      size: 1701
     - path: results/timing/binsearch_robust_n9.npz
       hash: md5
       md5: e381e44b2a3ff9419c067eb6cb9d8414
@@ -1133,12 +1133,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1150,8 +1150,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n10.csv
       hash: md5
-      md5: 4c2a3036e09e5c6e187cf99df8327e08
-      size: 1661
+      md5: 7b8fa7d4efc9ef8132db211688ad226f
+      size: 1727
     - path: results/timing/binsearch_robust_n10.npz
       hash: md5
       md5: 569315e3470e084aa28d472b89b360cd
@@ -1173,12 +1173,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1190,8 +1190,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n11.csv
       hash: md5
-      md5: 6364b219ebfec88b1bb581c8732eade6
-      size: 1666
+      md5: 91133ca85cd10f9f3148c9d6b7630fda
+      size: 1732
     - path: results/timing/binsearch_robust_n11.npz
       hash: md5
       md5: fb07d218b00222bb56423328c2b5ad6f
@@ -1213,12 +1213,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1230,8 +1230,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n12.csv
       hash: md5
-      md5: dac9b024313b8edfb22204418ed4c9a1
-      size: 1651
+      md5: 1c9b22b09a2263c998c4226e9531fdef
+      size: 1722
     - path: results/timing/binsearch_robust_n12.npz
       hash: md5
       md5: 46df279e08246d36486e276593622455
@@ -1253,12 +1253,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1270,8 +1270,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n13.csv
       hash: md5
-      md5: a76eca7871c48ebc739390f79adde612
-      size: 1664
+      md5: 363aa3e6ed3085efb2a5eff52005d801
+      size: 1734
     - path: results/timing/binsearch_robust_n13.npz
       hash: md5
       md5: 9593d22549677ebf33f2305b5957d0f1
@@ -1293,12 +1293,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1310,8 +1310,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n14.csv
       hash: md5
-      md5: ae5d71bd5c9ea4ec2bd66465115d625c
-      size: 1660
+      md5: 95b48c7bef46dca7fff3a25b714db55f
+      size: 1732
     - path: results/timing/binsearch_robust_n14.npz
       hash: md5
       md5: dc259e2d6d0e55e323f459f4860d16ea
@@ -1333,12 +1333,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1350,8 +1350,8 @@ stages:
     outs:
     - path: results/timing/binsearch_robust_n15.csv
       hash: md5
-      md5: a4a5b4a0203633e39d70bdbbc4c7669f
-      size: 1665
+      md5: a13a95ecf3abba1ac41652115f65fbb8
+      size: 1735
     - path: results/timing/binsearch_robust_n15.npz
       hash: md5
       md5: d2cfc2ed442c8a661a0433698ca0f47f
@@ -1369,16 +1369,16 @@ stages:
       size: 1866
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1390,8 +1390,8 @@ stages:
     outs:
     - path: results/timing/nonconvex_n4.csv
       hash: md5
-      md5: ee3729a7f7c6af21c9a40a02b819be8e
-      size: 1437
+      md5: 58b48ce922b365ec2ec6bb1fffa3b494
+      size: 1507
     - path: results/timing/nonconvex_n4.npz
       hash: md5
       md5: 2e40bb0d2c5f47abe78ff5294337ff34
@@ -1409,16 +1409,16 @@ stages:
       size: 2558
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1430,8 +1430,8 @@ stages:
     outs:
     - path: results/timing/nonconvex_n5.csv
       hash: md5
-      md5: 2b7e7251596ec619921b0210f2099288
-      size: 1426
+      md5: 639315353738aa00eeb2e25d10fa4792
+      size: 1496
     - path: results/timing/nonconvex_n5.npz
       hash: md5
       md5: 5eeb0ee4ab4d9a1a6083871e28eb84e6
@@ -1449,16 +1449,16 @@ stages:
       size: 3403
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1470,8 +1470,8 @@ stages:
     outs:
     - path: results/timing/nonconvex_n6.csv
       hash: md5
-      md5: c62995942495516853fe5ab67053ee73
-      size: 1416
+      md5: d71395f9183cd7e116caa6e07c3283be
+      size: 1490
     - path: results/timing/nonconvex_n6.npz
       hash: md5
       md5: 30b1e32172e8706add9e8bed1fdd691b
@@ -1489,16 +1489,16 @@ stages:
       size: 4398
     - path: deceiver_nonconvex.py
       hash: md5
-      md5: 033a537fb87353428ac90554a91724f1
-      size: 4715
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1510,8 +1510,8 @@ stages:
     outs:
     - path: results/timing/nonconvex_n7.csv
       hash: md5
-      md5: 23b10011277c53c871f1235e4493f936
-      size: 1421
+      md5: 57e15e36e91852c0cc2dbf1c40f36913
+      size: 1494
     - path: results/timing/nonconvex_n7.npz
       hash: md5
       md5: cf30dd9a5915f19d5da0410d05d7cd75
@@ -1533,12 +1533,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1550,8 +1550,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_robust_dv0.027826.csv
       hash: md5
-      md5: 816d82a1d36e20d88f713b4c0cee1a56
-      size: 15730
+      md5: c948606bbe170f44416529d016c07a59
+      size: 16336
     - path: results/tolerance/binsearch_robust_dv0.027826.npz
       hash: md5
       md5: eb0911359d244ed4a83d0cbc38adf902
@@ -1573,12 +1573,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1590,8 +1590,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_robust_dv0.0077426.csv
       hash: md5
-      md5: 904f26ef8e7271f47d067667bc5d67ec
-      size: 15834
+      md5: 85912c8686e1acc6cbe08410a0b14f31
+      size: 16424
     - path: results/tolerance/binsearch_robust_dv0.0077426.npz
       hash: md5
       md5: baf4b2a121549080e3b7e2c1e4d77fc8
@@ -1613,12 +1613,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1630,8 +1630,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_robust_dv0.0021544.csv
       hash: md5
-      md5: 38b3abe894c07bb5d6588a4fd69cf284
-      size: 15833
+      md5: 9cd8c696532bb412bc30748dbaf45aed
+      size: 16441
     - path: results/tolerance/binsearch_robust_dv0.0021544.npz
       hash: md5
       md5: 8e2f0d6f988e6f006e68497e23c53597
@@ -1653,12 +1653,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1670,8 +1670,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_robust_dv0.00059948.csv
       hash: md5
-      md5: ba2c75d6bcd09d37d27b7b3f66a7dab8
-      size: 15943
+      md5: 61bbde79ad6145ffd202f9b606b62509
+      size: 16543
     - path: results/tolerance/binsearch_robust_dv0.00059948.npz
       hash: md5
       md5: ad7705389e9c3e3ff7fbbddabc982c67
@@ -1693,12 +1693,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1710,8 +1710,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_robust_dv0.00016681.csv
       hash: md5
-      md5: 15403d8772fb7cad05e796ff5f0488ee
-      size: 15905
+      md5: dd14add644620cdf597788de68faaa82
+      size: 16513
     - path: results/tolerance/binsearch_robust_dv0.00016681.npz
       hash: md5
       md5: d32f6c9943f300a674f0c3fd06e06c7c
@@ -1733,12 +1733,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1750,8 +1750,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_robust_dv4.6416e-05.csv
       hash: md5
-      md5: b9ab2311dc6202570fe652bf962a6d7f
-      size: 15897
+      md5: 8adcf636ed6a0ce3edec55d30a83fef0
+      size: 16504
     - path: results/tolerance/binsearch_robust_dv4.6416e-05.npz
       hash: md5
       md5: 07fa3b7198bbf23dc16b1767273e471b
@@ -1773,12 +1773,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1790,8 +1790,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_robust_dv1.2915e-05.csv
       hash: md5
-      md5: b2f40ba4d354b7f32fbbb52f4a3d6b9b
-      size: 15897
+      md5: b0fe4b9b7bff852b0b6947e48e88210a
+      size: 16507
     - path: results/tolerance/binsearch_robust_dv1.2915e-05.npz
       hash: md5
       md5: 75d1a1bdf789d4ae4ae93d5764c4e824
@@ -1813,12 +1813,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1830,8 +1830,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_robust_dv3.5938e-06.csv
       hash: md5
-      md5: 280a1d7dc043b55200a84fc45c13afd3
-      size: 15907
+      md5: abf73785f64a35c3c4508679491acdeb
+      size: 16512
     - path: results/tolerance/binsearch_robust_dv3.5938e-06.npz
       hash: md5
       md5: a44bcfc7720f877794c8b853eeff916f
@@ -1853,12 +1853,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1870,8 +1870,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_robust_dv1e-06.csv
       hash: md5
-      md5: 2d09bdbc703018421c0d3c52f681c924
-      size: 15399
+      md5: c4fdba79659773c7a1a1002e82c0f1b1
+      size: 16015
     - path: results/tolerance/binsearch_robust_dv1e-06.npz
       hash: md5
       md5: 71cb146e6ec7d285923f9b663c1ee602
@@ -1893,12 +1893,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1910,8 +1910,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv0.027826.csv
       hash: md5
-      md5: 443fadf4512f1214ac26dfd9abc95797
-      size: 16439
+      md5: 1041378fd94594e8aac8b6355d3a3219
+      size: 17043
     - path: results/tolerance/binsearch_nonrobust_dv0.027826.npz
       hash: md5
       md5: 3a36273a6f1cf3067a76312c1ab91210
@@ -1933,12 +1933,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1950,8 +1950,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv0.0077426.csv
       hash: md5
-      md5: 16e5e605d3d788bfb5b9af000d971a85
-      size: 16547
+      md5: f4bd9dcc3707cebca2cbfd8dd1a6a9cb
+      size: 17155
     - path: results/tolerance/binsearch_nonrobust_dv0.0077426.npz
       hash: md5
       md5: f10163f50d2e82384f013b0d213bfcc2
@@ -1973,12 +1973,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -1990,8 +1990,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv0.0021544.csv
       hash: md5
-      md5: 2c58c5a66f9defaba1c068459d65b213
-      size: 16536
+      md5: b1dea86e071afa574c63158282ef1f07
+      size: 17148
     - path: results/tolerance/binsearch_nonrobust_dv0.0021544.npz
       hash: md5
       md5: b5cb9a798c06dd7c5e179c530d041bb7
@@ -2013,12 +2013,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -2030,8 +2030,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv0.00059948.csv
       hash: md5
-      md5: b921de9c689d1ac932554ccf11c43c63
-      size: 16642
+      md5: 873caaec753aff7d976c96b22c566f35
+      size: 17257
     - path: results/tolerance/binsearch_nonrobust_dv0.00059948.npz
       hash: md5
       md5: a4e50171c4b6089a1dc7545329e998ba
@@ -2053,12 +2053,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -2070,8 +2070,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv0.00016681.csv
       hash: md5
-      md5: 30bfba564de669db6ca45c1352d09f8a
-      size: 16594
+      md5: 23519e59ef8a7f1e62e67177bd8accae
+      size: 17193
     - path: results/tolerance/binsearch_nonrobust_dv0.00016681.npz
       hash: md5
       md5: 227a75958e849c6fd0612f21cb629ece
@@ -2093,12 +2093,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -2110,8 +2110,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv4.6416e-05.csv
       hash: md5
-      md5: 32669b9d1910143547348da3d9c39db1
-      size: 16594
+      md5: 14bfa95ef8edd768ba0db02232aff760
+      size: 17197
     - path: results/tolerance/binsearch_nonrobust_dv4.6416e-05.npz
       hash: md5
       md5: badb63d6763016a4e7ccc4b11652921f
@@ -2133,12 +2133,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -2150,8 +2150,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv1.2915e-05.csv
       hash: md5
-      md5: a66cc6a19cf0914ea9f04711ffb9ab4f
-      size: 16619
+      md5: dcb7f2d6cbfda452ad3169bf59f3afd3
+      size: 17220
     - path: results/tolerance/binsearch_nonrobust_dv1.2915e-05.npz
       hash: md5
       md5: 6a61153ad38846231baae74ad0615b88
@@ -2173,12 +2173,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -2190,8 +2190,8 @@ stages:
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv3.5938e-06.csv
       hash: md5
-      md5: 028b5fec8da3582b650280c82dd16ac3
-      size: 16606
+      md5: 2a1c86d14f41d0fbe4127ffcfaac9bff
+      size: 17215
     - path: results/tolerance/binsearch_nonrobust_dv3.5938e-06.npz
       hash: md5
       md5: ec2ecf93f9e660af0b4cfe7e958ec9fb
@@ -2213,12 +2213,12 @@ stages:
       size: 5172
     - path: deception.py
       hash: md5
-      md5: 3544f4cbeffbf3834c371af97fecab2c
-      size: 5065
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
     - path: methods.py
       hash: md5
-      md5: eb13bd171d3a0adf0a313dd9ea9ab2fb
-      size: 3767
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
     - path: sampling.py
       hash: md5
       md5: 5a5ff39f5dda28a44e4630017c2de51b
@@ -2230,9 +2230,394 @@ stages:
     outs:
     - path: results/tolerance/binsearch_nonrobust_dv1e-06.csv
       hash: md5
-      md5: f0dbaf9eeff5116117c10e8bc6a55c07
-      size: 16105
+      md5: 491c891b119a4805bcebd7bdcc6b97a1
+      size: 16720
     - path: results/tolerance/binsearch_nonrobust_dv1e-06.npz
       hash: md5
       md5: 9affa51934b2b6042eccdcd2581fcbb7
       size: 25083
+  timing_nonconvex@8:
+    cmd: python deception.py --label timing --method nonconvex --games 
+      data/games/timing_n8.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --time_limit 300.0 
+      --out_csv results/timing/nonconvex_n8.csv --out_npz 
+      results/timing/nonconvex_n8.npz
+    deps:
+    - path: data/games/timing_n8.npz
+      hash: md5
+      md5: dfb2c613c8ea59591c6c171d0005f7a8
+      size: 5548
+    - path: deceiver_nonconvex.py
+      hash: md5
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
+    - path: deception.py
+      hash: md5
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
+    - path: methods.py
+      hash: md5
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/nonconvex_n8.csv
+      hash: md5
+      md5: 216e88b8a29406bc32c5250c1106edb9
+      size: 1480
+    - path: results/timing/nonconvex_n8.npz
+      hash: md5
+      md5: d5604a016a6375ae737cf68c3bcfaae2
+      size: 7485
+  timing_nonconvex@9:
+    cmd: python deception.py --label timing --method nonconvex --games 
+      data/games/timing_n9.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --time_limit 300.0 
+      --out_csv results/timing/nonconvex_n9.csv --out_npz 
+      results/timing/nonconvex_n9.npz
+    deps:
+    - path: data/games/timing_n9.npz
+      hash: md5
+      md5: 73d71e0715c0d2f77487e389a2d64465
+      size: 6852
+    - path: deceiver_nonconvex.py
+      hash: md5
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
+    - path: deception.py
+      hash: md5
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
+    - path: methods.py
+      hash: md5
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/nonconvex_n9.csv
+      hash: md5
+      md5: e0bc8b5c962d73de920b4761b70f2735
+      size: 1483
+    - path: results/timing/nonconvex_n9.npz
+      hash: md5
+      md5: 17c0445370481ae9972b818a38d4db62
+      size: 8535
+  timing_nonconvex@10:
+    cmd: python deception.py --label timing --method nonconvex --games 
+      data/games/timing_n10.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --time_limit 300.0 
+      --out_csv results/timing/nonconvex_n10.csv --out_npz 
+      results/timing/nonconvex_n10.npz
+    deps:
+    - path: data/games/timing_n10.npz
+      hash: md5
+      md5: 0229191b4a85e2772d827f3b04613080
+      size: 8319
+    - path: deceiver_nonconvex.py
+      hash: md5
+      md5: 3d8cfa9a64ed8ac23a655bd9fa14ddea
+      size: 4761
+    - path: deception.py
+      hash: md5
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
+    - path: methods.py
+      hash: md5
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/nonconvex_n10.csv
+      hash: md5
+      md5: 04ccc31bca2e57276b161c58c128fb59
+      size: 1517
+    - path: results/timing/nonconvex_n10.npz
+      hash: md5
+      md5: 9451cd60ec50ec4383852589d75e787b
+      size: 10173
+  sample_timing_games@16:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 16 --num_cols 16 --out data/games/timing_n16.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n16.npz
+      hash: md5
+      md5: bd6b22ec3c5d764f4fedc7b45fc8ba04
+      size: 20371
+  sample_timing_games@17:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 17 --num_cols 17 --out data/games/timing_n17.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n17.npz
+      hash: md5
+      md5: cc3ac5c239fcada5f671e3dbd707eddf
+      size: 22908
+  sample_timing_games@18:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 18 --num_cols 18 --out data/games/timing_n18.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n18.npz
+      hash: md5
+      md5: b422131898f865f38cbc796cf28b23d8
+      size: 25595
+  sample_timing_games@19:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 19 --num_cols 19 --out data/games/timing_n19.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n19.npz
+      hash: md5
+      md5: 6e3732f8b0909b81d68f5d68e59529f8
+      size: 28415
+  sample_timing_games@20:
+    cmd: python sampling.py --seed 42 --low -5.0 --high 5.0 --num_games 10 
+      --num_rows 20 --num_cols 20 --out data/games/timing_n20.npz
+    deps:
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    outs:
+    - path: data/games/timing_n20.npz
+      hash: md5
+      md5: 0b2d4b1396b9f74c1cca1947ce8397f6
+      size: 31418
+  timing_binsearch@16:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n16.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n16.csv --out_npz 
+      results/timing/binsearch_robust_n16.npz
+    deps:
+    - path: data/games/timing_n16.npz
+      hash: md5
+      md5: bd6b22ec3c5d764f4fedc7b45fc8ba04
+      size: 20371
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
+    - path: methods.py
+      hash: md5
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n16.csv
+      hash: md5
+      md5: 9428d60a676d4292b29d0b52f478f519
+      size: 1729
+    - path: results/timing/binsearch_robust_n16.npz
+      hash: md5
+      md5: 79d5cbb8e326b4b53501cfc4e105325f
+      size: 21986
+  timing_binsearch@17:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n17.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n17.csv --out_npz 
+      results/timing/binsearch_robust_n17.npz
+    deps:
+    - path: data/games/timing_n17.npz
+      hash: md5
+      md5: cc3ac5c239fcada5f671e3dbd707eddf
+      size: 22908
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
+    - path: methods.py
+      hash: md5
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n17.csv
+      hash: md5
+      md5: d007d416cd62d4a108b486ad4055f91f
+      size: 1730
+    - path: results/timing/binsearch_robust_n17.npz
+      hash: md5
+      md5: cd7fc1914705f7d849c3a80f607fa621
+      size: 24550
+  timing_binsearch@18:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n18.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n18.csv --out_npz 
+      results/timing/binsearch_robust_n18.npz
+    deps:
+    - path: data/games/timing_n18.npz
+      hash: md5
+      md5: b422131898f865f38cbc796cf28b23d8
+      size: 25595
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
+    - path: methods.py
+      hash: md5
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n18.csv
+      hash: md5
+      md5: d75941f6e01c137d2c9b1e2f5472e771
+      size: 1727
+    - path: results/timing/binsearch_robust_n18.npz
+      hash: md5
+      md5: c7a1f9c9d768e0bd64cf1314288aaa09
+      size: 27377
+  timing_binsearch@19:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n19.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n19.csv --out_npz 
+      results/timing/binsearch_robust_n19.npz
+    deps:
+    - path: data/games/timing_n19.npz
+      hash: md5
+      md5: 6e3732f8b0909b81d68f5d68e59529f8
+      size: 28415
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
+    - path: methods.py
+      hash: md5
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n19.csv
+      hash: md5
+      md5: e351c95dacd920af7a0d44e0f3a06b15
+      size: 1737
+    - path: results/timing/binsearch_robust_n19.npz
+      hash: md5
+      md5: 5ae656025802980cf06debbfccf4d0b4
+      size: 30185
+  timing_binsearch@20:
+    cmd: python deception.py --label timing --method binsearch_robust --games 
+      data/games/timing_n20.npz --dv 0.001 --time_limit 60.0 --mip_gap 0.01 
+      --gurobi_seed 0 --gurobi_threads 0 --budgets 3.0 --out_csv 
+      results/timing/binsearch_robust_n20.csv --out_npz 
+      results/timing/binsearch_robust_n20.npz
+    deps:
+    - path: data/games/timing_n20.npz
+      hash: md5
+      md5: 0b2d4b1396b9f74c1cca1947ce8397f6
+      size: 31418
+    - path: deceiver_binary_search.py
+      hash: md5
+      md5: 8a038b4f76db5eab2518a51eb6b06dd8
+      size: 5172
+    - path: deception.py
+      hash: md5
+      md5: 7693853e2ec1e5a9eef8d5bb27b7d8f7
+      size: 5129
+    - path: methods.py
+      hash: md5
+      md5: 2cf006ac1094c2c4a5c6a82b7ac7d5b6
+      size: 3933
+    - path: sampling.py
+      hash: md5
+      md5: 5a5ff39f5dda28a44e4630017c2de51b
+      size: 3938
+    - path: zs_game.py
+      hash: md5
+      md5: 227fb9b24f325df69440dc65cd9d89cb
+      size: 6510
+    outs:
+    - path: results/timing/binsearch_robust_n20.csv
+      hash: md5
+      md5: 6f318d074300dfb9a7ae2a7422156020
+      size: 1738
+    - path: results/timing/binsearch_robust_n20.npz
+      hash: md5
+      md5: 1ac3b6003c2b0e413837eac2198b459a
+      size: 33325

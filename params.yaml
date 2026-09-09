@@ -35,9 +35,9 @@ compare:
     budgets: [1.0, 2.25, 3.5, 4.75, 6.0]
 
 timing:
-  sizes: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-  # The nonconvex solver is too slow past 7x7, so it sweeps a shorter range.
-  nonconvex_sizes: [2, 3, 4, 5, 6, 7]
+  sizes: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  # The nonconvex solver is too slow past 10x10, so it sweeps a shorter range.
+  nonconvex_sizes: [2, 3, 4, 5, 6, 7, 8, 9, 10]
   nonconvex_time_limit: 300.0
   num_games: 10
   deception:
@@ -74,4 +74,15 @@ rps:
     outcomes: [0.0, 1.0, -1.0, -1.0, 0.0, 1.0, 1.0, -1.0, 0.0]
   deception:
     budgets:
-      [0.1, 0.42222, 0.74444, 1.0667, 1.3889, 1.7111, 2.0333, 2.3556, 2.6778, 3.0]
+      [
+        0.1,
+        0.42222,
+        0.74444,
+        1.0667,
+        1.3889,
+        1.7111,
+        2.0333,
+        2.3556,
+        2.6778,
+        3.0,
+      ]
