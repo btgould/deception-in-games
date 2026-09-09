@@ -1,7 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": {
-    "values": "<DVC_METRIC_DATA>"
+    "values": "<DVC_METRIC_DATA>",
+    "name": "source"
   },
   "transform": [
     {
@@ -17,8 +18,8 @@
     "text": "<DVC_METRIC_TITLE>",
     "anchor": "middle"
   },
-  "width": "<DVC_METRIC_PLOT_WIDTH>",
-  "height": "<DVC_METRIC_PLOT_HEIGHT>",
+  "width": 400,
+  "height": 300,
   "encoding": {
     "x": {
       "field": "dvc_x",
@@ -28,12 +29,53 @@
     "color": {
       "field": "method_label",
       "type": "nominal",
-      "title": "Method"
+      "title": null
     },
     "strokeDash": {
       "field": "rev",
       "type": "nominal",
-      "title": "Revision"
+      "title": "Revision",
+      "legend": {
+        "symbolFillColor": "transparent",
+        "symbolStrokeColor": "grey",
+        "orient": "top-left",
+        "titleOpacity": {
+          "expr": "dvc_multi_rev ? 1 : 0"
+        },
+        "labelOpacity": {
+          "expr": "dvc_multi_rev ? 1 : 0"
+        },
+        "symbolOpacity": {
+          "expr": "dvc_multi_rev ? 1 : 0"
+        },
+        "fillColor": {
+          "expr": "dvc_multi_rev ? '#ffffffcc' : null"
+        },
+        "strokeColor": {
+          "expr": "dvc_multi_rev ? '#d0d0d0' : null"
+        },
+        "titleFontSize": {
+          "expr": "dvc_multi_rev ? 12.375 : 0"
+        },
+        "labelFontSize": {
+          "expr": "dvc_multi_rev ? 11.25 : 0"
+        },
+        "symbolSize": {
+          "expr": "dvc_multi_rev ? 100 : 0"
+        },
+        "symbolStrokeWidth": {
+          "expr": "dvc_multi_rev ? 2 : 0"
+        },
+        "padding": {
+          "expr": "dvc_multi_rev ? 5 : 0"
+        },
+        "titleLimit": {
+          "expr": "dvc_multi_rev ? 180 : 0"
+        },
+        "labelLimit": {
+          "expr": "dvc_multi_rev ? 400 : 0"
+        }
+      }
     }
   },
   "layer": [
@@ -79,5 +121,38 @@
         }
       }
     }
-  ]
+  ],
+  "params": [
+    {
+      "name": "dvc_multi_rev",
+      "expr": "length(data('source')) > 1 && data('source')[0]['rev'] !== peek(pluck(data('source'), 'rev'))"
+    }
+  ],
+  "config": {
+    "font": "CMU Serif, Computer Modern, Latin Modern Roman, serif",
+    "axis": {
+      "labelFontSize": 15,
+      "titleFontSize": 16.5,
+      "labelOverlap": "greedy"
+    },
+    "axisX": {
+      "tickCount": {
+        "expr": "ceil(width / 60)"
+      }
+    },
+    "title": {
+      "fontSize": 19.5
+    },
+    "legend": {
+      "labelFontSize": 11.25,
+      "titleFontSize": 12.375,
+      "labelLimit": 400,
+      "orient": "bottom-right",
+      "fillColor": "#ffffffcc",
+      "strokeColor": "#d0d0d0",
+      "offset": 4,
+      "padding": 5,
+      "cornerRadius": 3
+    }
+  }
 }
