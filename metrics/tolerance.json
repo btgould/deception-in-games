@@ -4,21 +4,21 @@
   "methods": {
     "binsearch_nonrobust": {
       "num_results": 1000,
-      "computation_time_mean": 0.03189886725201173,
-      "computation_time_std": 0.009048952394586038,
-      "computation_time_max": 0.0478852650003318,
-      "improvement_mean": 0.8970505081006195,
-      "improvement_std": 0.4532821927295524,
+      "computation_time_mean": 0.03165362461801847,
+      "computation_time_std": 0.009205594051378174,
+      "computation_time_max": 0.0469136000028811,
+      "improvement_mean": 0.005144762710616379,
+      "improvement_std": 0.014054156299979765,
       "num_truncated": 0,
       "truncated_by_size": {}
     },
     "binsearch_robust": {
       "num_results": 1000,
-      "computation_time_mean": 0.03221677101198743,
-      "computation_time_std": 0.009296420159488597,
-      "computation_time_max": 0.0469550379993961,
-      "improvement_mean": 0.0965506655006224,
-      "improvement_std": 1.6281165828576694,
+      "computation_time_mean": 0.03193196709660692,
+      "computation_time_std": 0.009035485725495233,
+      "computation_time_max": 0.0483422419929411,
+      "improvement_mean": -1.6415448826213337,
+      "improvement_std": 1.5326126288257356,
       "num_truncated": 0,
       "truncated_by_size": {}
     }

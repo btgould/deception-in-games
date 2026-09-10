@@ -13,7 +13,7 @@ def deception_nonconvex(
     game: ZSGame,
     deception_budget: float,
     time_limit: float = 60,
-    mip_gap: float = 0.01,
+    mip_gap_abs: float = 0.025,
     gurobi_seed: int = 0,
     gurobi_threads: int = 0,
 ) -> DeceptionResult:
@@ -23,7 +23,7 @@ def deception_nonconvex(
         game: The zero-sum game to analyze.
         deception_budget: The budget for deception.
         time_limit: Gurobi time limit in seconds.
-        mip_gap: Relative MIP gap at which Gurobi stops.
+        mip_gap_abs: Absolute MIP gap, in payoff units, at which Gurobi stops.
         gurobi_seed: Gurobi's internal random seed.
         gurobi_threads: Gurobi thread count; 0 lets Gurobi choose.
     Returns:
@@ -46,7 +46,8 @@ def deception_nonconvex(
 
     m = Model()
     m.setParam("OutputFlag", 0)  # silent
-    m.setParam("MIPGap", mip_gap)
+    m.setParam("MIPGapAbs", mip_gap_abs)
+    m.setParam("MIPGap", 0.0)  # absolute gap is the sole stopping criterion
     m.setParam("TimeLimit", time_limit)
     m.setParam("NonConvex", 2)  # Enable non-convex QCP
     m.setParam("Seed", gurobi_seed)

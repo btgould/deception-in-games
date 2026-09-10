@@ -120,7 +120,7 @@ def main() -> None:
     parser.add_argument("--sanity_check", action="store_true")
     parser.add_argument("--dv", type=float, default=DV)
     parser.add_argument("--time_limit", type=float, default=60.0)
-    parser.add_argument("--mip_gap", type=float, default=0.01)
+    parser.add_argument("--mip_gap_abs", type=float, default=0.025)
     parser.add_argument("--gurobi_seed", type=int, default=0)
     parser.add_argument("--gurobi_threads", type=int, default=0)
     parser.add_argument("--out_csv", required=True)
@@ -135,7 +135,7 @@ def main() -> None:
         dv=args.dv,
         time_limit=args.time_limit,
         sanity_check=args.sanity_check,
-        mip_gap=args.mip_gap,
+        mip_gap_abs=args.mip_gap_abs,
         gurobi_seed=args.gurobi_seed,
         gurobi_threads=args.gurobi_threads,
     )

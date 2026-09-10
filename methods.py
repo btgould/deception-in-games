@@ -86,7 +86,7 @@ def solver_for(
     method: DeceptionMethod,
     dv: float = DV,
     time_limit: float = 60.0,
-    mip_gap: float = 0.01,
+    mip_gap_abs: float = 0.025,
     gurobi_seed: int = 0,
     gurobi_threads: int = 0,
 ) -> Solver:
@@ -97,7 +97,7 @@ def solver_for(
         method: Which deception solver to use.
         dv: Binary search tolerance on the victim's rationality level (binsearch only).
         time_limit: Gurobi time limit in seconds (nonconvex only).
-        mip_gap: Relative MIP gap at which Gurobi stops (nonconvex only).
+        mip_gap_abs: Absolute MIP gap at which Gurobi stops (nonconvex only).
         gurobi_seed: Gurobi's internal random seed.
         gurobi_threads: Gurobi thread count; 0 lets Gurobi choose.
 
@@ -115,7 +115,7 @@ def solver_for(
                 game,
                 budget,
                 time_limit=time_limit,
-                mip_gap=mip_gap,
+                mip_gap_abs=mip_gap_abs,
                 gurobi_seed=gurobi_seed,
                 gurobi_threads=gurobi_threads,
             )

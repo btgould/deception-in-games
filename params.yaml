@@ -20,7 +20,8 @@ solver:
   dv: 1.0e-3
   # Gurobi time limit (s) for the nonconvex QCP. Results are wall-clock dependent.
   time_limit: 60.0
-  mip_gap: 0.01
+  # Absolute gap (payoff units) at which Gurobi stops the nonconvex QCP.
+  mip_gap_abs: 0.025
   gurobi_seed: 0
   # 0 lets Gurobi choose; set to 1 for reproducible timings at the cost of speed.
   gurobi_threads: 0
