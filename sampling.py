@@ -46,28 +46,22 @@ def sample_games(
     label: str = "",
 ) -> FArray:
     """
-    Draws a batch of security-style payoff matrices G[i, j] = v[j] - c[i].
-
-    Each game gets a vector of num_cols resource values v ~ U[0, high] and a vector of
-    num_rows security procedure costs c ~ U[0, -low], so entries span [low, high] but,
-    unlike i.i.d. entries, every matrix has rank at most two.
+    Draws a batch of payoff matrices with entries uniform on [low, high].
 
     Args:
         seed: Base seed shared by the whole experiment suite.
         num_games: Number of matrices in the batch.
         num_rows: Rows (deceiver actions) per matrix.
         num_cols: Columns (victim actions) per matrix.
-        low: Lower bound on payoff entries; -low bounds the procedure costs.
-        high: Upper bound on payoff entries; bounds the resource values.
+        low: Lower bound on payoff entries.
+        high: Upper bound on payoff entries.
         label: Optional extra key, to keep identically shaped batches independent.
 
     Returns:
         An array of shape (num_games, num_rows, num_cols).
     """
     rng = derive_rng(seed, label, num_games, num_rows, num_cols)
-    values = rng.uniform(low=0.0, high=high, size=(num_games, 1, num_cols))
-    costs = rng.uniform(low=0.0, high=-low, size=(num_games, num_rows, 1))
-    return values - costs
+    return rng.uniform(low=low, high=high, size=(num_games, num_rows, num_cols))
 
 
 def save_games(path: str, games: FArray, seed: int, label: str) -> None:

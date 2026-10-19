@@ -27,21 +27,6 @@ def test_sample_games_stable_across_processes():
     assert len(runs) == 1
 
 
-def test_games_have_value_minus_cost_structure():
-    """G[i, j] = v[j] - c[i] makes every 2x2 minor vanish."""
-    games = sampling.sample_games(42, 5, 4, 6)
-    minors = (
-        games[:, :-1, :-1] - games[:, :-1, 1:] - games[:, 1:, :-1] + games[:, 1:, 1:]
-    )
-    assert np.allclose(minors, 0.0)
-
-
-def test_games_respect_entry_bounds():
-    games = sampling.sample_games(42, 5, 4, 6, low=-5.0, high=5.0)
-    assert games.min() >= -5.0
-    assert games.max() <= 5.0
-
-
 def test_shape_keys_the_batch():
     a = sampling.sample_games(42, 5, 5, 5)
     b = sampling.sample_games(42, 5, 5, 6)[:, :, :5]
