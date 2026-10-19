@@ -10,8 +10,8 @@ seed: 42
 
 # Payoff entry bounds, shared by every sampled batch.
 games:
-  low: -5.0
-  high: 5.0
+  low: 0.0
+  high: 10.0
 
 # Solver options shared by every deception stage.
 solver:
@@ -28,7 +28,7 @@ solver:
 compare:
   methods: [nonconvex, binsearch_robust, binsearch_nonrobust]
   games:
-    num_games: 5
+    num_games: 100
     num_rows: 5
     num_cols: 5
   deception:

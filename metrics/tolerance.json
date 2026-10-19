@@ -1,24 +1,24 @@
 {
-  "num_results": 2000,
+  "num_results": 2008,
   "num_truncated": 0,
   "methods": {
     "binsearch_nonrobust": {
-      "num_results": 1000,
-      "computation_time_mean": 0.03189886725201173,
-      "computation_time_std": 0.009048952394586038,
-      "computation_time_max": 0.0478852650003318,
-      "improvement_mean": 0.8970505081006195,
-      "improvement_std": 0.4532821927295524,
+      "num_results": 1004,
+      "computation_time_mean": 0.035047797457009686,
+      "computation_time_std": 0.011513547879855937,
+      "computation_time_max": 0.0739836849970743,
+      "improvement_mean": 0.8968471355778511,
+      "improvement_std": 0.4531770257009823,
       "num_truncated": 0,
       "truncated_by_size": {}
     },
     "binsearch_robust": {
-      "num_results": 1000,
-      "computation_time_mean": 0.03221677101198743,
-      "computation_time_std": 0.009296420159488597,
-      "computation_time_max": 0.0469550379993961,
-      "improvement_mean": 0.0965506655006224,
-      "improvement_std": 1.6281165828576694,
+      "num_results": 1004,
+      "computation_time_mean": 0.04445054233246081,
+      "computation_time_std": 0.016291542780387483,
+      "computation_time_max": 0.0926490949932485,
+      "improvement_mean": 1.4040484641308062,
+      "improvement_std": 0.46279605155267567,
       "num_truncated": 0,
       "truncated_by_size": {}
     }
